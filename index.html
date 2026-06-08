@@ -29,7 +29,7 @@
   h1{font-family:"Pretendard Variable","Pretendard",sans-serif;font-size:27px;margin:6px 0 4px;letter-spacing:-.5px;font-weight:800}
   .sub{font-size:13px;color:var(--sub)}
 
-  .modebar{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px;margin:16px auto;width:fit-content;box-shadow:var(--shadow)}
+  .modebar{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:5px;margin:16px auto;max-width:100%;box-shadow:var(--shadow)}
   .modebtn{border:none;background:transparent;color:var(--sub);font-weight:700;font-size:13px;padding:8px 18px;border-radius:999px;cursor:pointer;font-family:inherit}
   .modebtn.on{background:var(--accent);color:#fff}
 
@@ -107,6 +107,43 @@
   .ftbl th,.ftbl td{border:1px solid var(--line);padding:7px 9px;text-align:left;line-height:1.5}
   .ftbl th{background:rgba(156,90,42,.12);font-weight:800;color:var(--accent)}
   .ftbl td:first-child{font-weight:700;white-space:nowrap}
+  /* QUIZ VIEW */
+  #quizView{display:none}
+  .quiz-sub{display:flex;gap:6px;justify-content:center;margin-bottom:14px}
+  .qsbtn{border:1.5px solid var(--line);background:var(--paper);color:var(--sub);font-family:inherit;font-weight:800;font-size:13px;padding:9px 22px;border-radius:999px;cursor:pointer}
+  .qsbtn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .qmeta{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--sub);margin-bottom:8px;padding:0 4px}
+  .qmeta .sc-o{color:var(--o)} .qmeta .sc-x{color:var(--x)}
+  .q-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 18px;box-shadow:var(--shadow);min-height:160px}
+  .q-tag{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;padding:3px 11px;border-radius:99px;margin-bottom:11px}
+  .q-text{font-size:16.5px;font-weight:800;line-height:1.55;margin-bottom:15px;letter-spacing:-.2px}
+  .opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;font-weight:600;line-height:1.5;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s}
+  .opt:hover{border-color:var(--accent2)}
+  .opt.correct{background:rgba(62,124,90,.15);border-color:var(--o);color:#1f4a33}
+  .opt.wrong{background:rgba(178,58,72,.13);border-color:var(--x);color:#7a1f29}
+  .opt.dim{opacity:.55}
+  .opt .mark{float:right;font-weight:900}
+  .q-exp{margin-top:12px;padding:12px 14px;background:rgba(200,133,47,.10);border-left:4px solid var(--accent2);border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.65;display:none}
+  .q-exp.show{display:block}
+  .q-exp b{color:var(--accent)}
+  .saq-input{width:100%;font-family:inherit;font-size:14px;line-height:1.6;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px;min-height:70px;resize:vertical;margin-bottom:10px}
+  .saq-reveal{margin-top:6px;padding:13px 15px;background:rgba(62,124,90,.10);border-left:4px solid var(--ch6);border-radius:0 8px 8px 0;font-size:14px;line-height:1.7;display:none}
+  .saq-reveal.show{display:block}
+  .saq-reveal .lbl{font-size:11px;font-weight:800;color:var(--ch6);letter-spacing:.04em;display:block;margin-bottom:5px}
+  .saq-kw{margin-top:8px;font-size:12.5px;color:var(--sub)}
+  .saq-kw span{display:inline-block;background:rgba(156,90,42,.12);color:var(--accent);font-weight:700;border-radius:6px;padding:2px 8px;margin:2px 3px 0 0}
+  .q-nav{display:flex;gap:9px;margin-top:11px}
+  .q-btn{flex:1;border:none;font-family:inherit;font-weight:800;font-size:14px;padding:13px;border-radius:12px;cursor:pointer;box-shadow:var(--shadow)}
+  .q-btn.primary{background:var(--accent);color:#fff}
+  .q-btn.ghost{flex:0 0 auto;padding:13px 18px;background:var(--paper);color:var(--sub);border:1.5px solid var(--line)}
+  .q-selfgrade{display:flex;gap:9px;margin-top:11px}
+  .q-self{flex:1;border:none;font-family:inherit;font-weight:800;font-size:14px;padding:12px;border-radius:11px;cursor:pointer;color:#fff}
+  .q-self.o{background:var(--o)} .q-self.x{background:var(--x)}
+  .exam-chrow{display:flex;gap:8px;justify-content:center}
+  .exam-ch{flex:1;border:none;color:#fff;font-family:inherit;font-weight:800;font-size:14px;padding:11px;border-radius:11px;cursor:pointer;box-shadow:var(--shadow)}
+  .q-result{text-align:center;padding:40px 20px}
+  .q-result h3{font-size:22px;margin-bottom:8px;border:none;padding:0;color:var(--ink)}
+  .q-result p{color:var(--sub);font-size:14px;margin-bottom:16px}
   footer{text-align:center;font-size:11.5px;color:var(--sub);margin-top:26px;line-height:1.6}
 </style>
 </head>
@@ -122,6 +159,7 @@
     <button class="modebtn on" id="mCard" onclick="setMode('card')">🃏 플래시카드</button>
     <button class="modebtn" id="mList" onclick="setMode('list')">📖 개념 보기</button>
     <button class="modebtn" id="mFull" onclick="setMode('full')">📋 전체 정리</button>
+    <button class="modebtn" id="mQuiz" onclick="setMode('quiz')">📝 예상문제</button>
   </div>
 
   <!-- CARD VIEW -->
@@ -622,6 +660,24 @@
   </div>
   <!-- FULL VIEW END -->
 
+  <!-- QUIZ VIEW -->
+  <div id="quizView">
+    <div class="quiz-sub">
+      <button class="qsbtn on" id="qsMcq" onclick="showQuizSub('mcq')">객관식</button>
+      <button class="qsbtn" id="qsSaq" onclick="showQuizSub('saq')">주관식</button>
+    </div>
+
+    <div id="mcqWrap">
+      <div class="qmeta"><span id="mcqProg"></span><span id="mcqScoreBox"></span></div>
+      <div class="q-card" id="mcqCard"></div>
+    </div>
+
+    <div id="saqWrap" style="display:none">
+      <div class="qmeta"><span id="saqProg"></span><span id="saqScoreBox"></span></div>
+      <div class="q-card" id="saqCard"></div>
+    </div>
+  </div>
+
   <footer>강의 PDF(5·6·7·8장) 내용 기반 · 8장은 '전경과 배경의 법칙'까지 수록<br>탭하면 카드가 뒤집힙니다 · O/X로 약한 개념을 추려 복습하세요</footer>
 </div>
 
@@ -788,18 +844,233 @@ function buildList(){
   document.getElementById('listView').innerHTML=html;
 }
 function setMode(m){
-  const card=document.getElementById('cardView'), list=document.getElementById('listView'), full=document.getElementById('fullView');
+  const ids={card:'cardView',list:'listView',full:'fullView',quiz:'quizView'};
+  for(const k in ids){
+    document.getElementById(ids[k]).style.display = (k===m)?'block':'none';
+  }
   document.getElementById('mCard').classList.toggle('on',m==='card');
   document.getElementById('mList').classList.toggle('on',m==='list');
   document.getElementById('mFull').classList.toggle('on',m==='full');
-  card.style.display = m==='card'?'block':'none';
-  list.style.display = m==='list'?'block':'none';
-  full.style.display = m==='full'?'block':'none';
+  document.getElementById('mQuiz').classList.toggle('on',m==='quiz');
   window.scrollTo(0,0);
 }
 
+/* ===== QUIZ ===== */
+const chTag={"5장":"var(--ch5)","6장":"var(--ch6)","7장":"var(--ch7)","8장":"var(--ch8)"};
+const MCQ_ALL=[
+/* 5장 (20) */
+{ch:"5장",q:"설득 커뮤니케이터(정보원)의 정의로 가장 적절한 것은?",opts:["메시지를 전달받는 개인이나 집단","다른 개인 또는 집단과 정보를 공유하기 원하는 개인 또는 조직","메시지가 흐르는 통로","수용자의 욕구를 충족시키는 콘텐츠"],ans:1,exp:"정보원=다른 개인/집단과 정보를 공유하기 원하는 개인 또는 조직. 1번은 수용자."},
+{ch:"5장",q:"원천 유형에 따른 정보원 구분에 해당하지 않는 것은?",opts:["기업정보 원천","개인적 원천","경험적 원천","규범적 원천"],ans:3,exp:"4가지=기업정보·개인적·경험적·중립적 원천. 규범적 원천은 없다."},
+{ch:"5장",q:"무명(일반인) 모델이 유명 모델보다 효과적인 경우가 아닌 것은?",opts:["유명 모델의 중복 출연","제품과 모델의 낮은 연관성","모델이 부정적 사건에 연루","감성소구가 강한 제품"],ans:3,exp:"감성소구 제품은 유명인 모델이 강력하다."},
+{ch:"5장",q:"일반인 광고모델이 설득 효과를 갖는 핵심 원리는?",opts:["전문적 권위에 대한 복종","수용자와의 유사성·일체감","문화적 의미의 전이","공포의 감소"],ans:1,exp:"같은 지위로 지각→유사성·일체감→광고 효과."},
+{ch:"5장",q:"일반인 광고모델의 장점으로 보기 어려운 것은?",opts:["소비자 증언이 신뢰감을 증대","같은 연령층이면 동료의식 유발","위험도 낮은 일상용품에 효과적","관여도 높은 전문 제품에 가장 효과적"],ans:3,exp:"관여도 높은 제품은 전문가 모델이 적합."},
+{ch:"5장",q:"유명인의 문화적 의미가 제품을 거쳐 소비자에게 전이된다고 설명하는 모델은?",opts:["조화가설","의미전이모델","접종이론","균형이론"],ans:1,exp:"McCracken의 의미전이모델."},
+{ch:"5장",q:"조화가설(match-up hypothesis)에 대한 설명으로 옳은 것은?",opts:["제품 특성과 모델 특성을 조화시켜 효과를 높인다","위협 수준이 높을수록 효과가 크다","결론을 명시할수록 효과가 크다","집단 규모가 클수록 동조가 커진다"],ans:0,exp:"조화가설=제품-모델 특성의 조화."},
+{ch:"5장",q:"유명인 광고모델의 단점이 아닌 것은?",opts:["엄청난 비용","중복 출현에 따른 소비자 혼동","모델만 기억하고 상품명은 잊음","소비자와의 유사성·일체감 형성"],ans:3,exp:"유사성·일체감은 일반인 모델의 장점."},
+{ch:"5장",q:"전문가 광고모델이 줄여주는 소비자의 위험요소와 거리가 먼 것은?",opts:["작동 방법에 대한 무지","부작용에 대한 우려","제품이 신체에 미치는 문제","모델에 대한 친근감 부족"],ans:3,exp:"전문가는 기능·안전 관련 위험을 줄인다."},
+{ch:"5장",q:"정보원의 공신력을 구성하는 두 요소는?",opts:["전문성 + 신뢰성","전문성 + 매력성","신뢰성 + 카리스마","매력성 + 진정성"],ans:0,exp:"공신력=전문성+신뢰성."},
+{ch:"5장",q:"공신력의 속성에 해당하지 않는 것은?",opts:["수용자 입장에서 판단되는 개념","다차원적 개념구성체","고정 불변의 절대적 속성","상황·맥락적 현상"],ans:2,exp:"공신력은 역동성을 지녀 고정 불변이 아니다."},
+{ch:"5장",q:"전문성(expertness)에 대한 설명으로 옳은 것은?",opts:["편견 없이 솔직하게 제시한다고 지각되는 정도","올바른 해답·정확한 판단을 제시할 수 있다고 지각되는 정도","신체적으로 매력적이라 지각되는 정도","권위로 타인을 이끄는 능력"],ans:1,exp:"1번은 신뢰성, 3번은 매력성, 4번은 카리스마."},
+{ch:"5장",q:"정보원이 진실한 정보를 전달하지 않을 것이라고 믿는 신념을 가리키는 용어는?",opts:["후광효과","보고 편향","수면자 효과","조화가설"],ans:1,exp:"보고 편향(reporting bias)은 신뢰성과 관련."},
+{ch:"5장",q:"수면자 효과(sleeper effect)에 대한 설명으로 옳은 것은?",opts:["시간이 지나도 정보원을 정확히 기억한다","시간이 지나면 낮은 공신력 정보원의 효과가 증가한다","높은 공신력의 효과는 시간이 갈수록 커진다","공신력은 효과에 영향을 주지 않는다"],ans:1,exp:"정보원-메시지 분리로 낮은 공신력 효과가 증가."},
+{ch:"5장",q:"신체적 매력에 대한 설명으로 옳은 것은?",opts:["정보원을 잘 알수록 더 중요하게 작용한다","정보원을 잘 모를 때 더 중요하게 작용한다","전문성과 동일한 개념이다","태도 변용과 무관하다"],ans:1,exp:"잘 모를 때 신체적 매력이 더 크게 작용."},
+{ch:"5장",q:"위엄으로 타인을 이끌거나 설복시키는 권위적 영향력을 가리키는 것은?",opts:["진정성","카리스마","후광효과","동조"],ans:1,exp:"카리스마. 진정성=내면과 행동의 일치, 후광효과=일반 견해의 전이."},
+{ch:"5장",q:"진정성(authenticity)에 대한 설명으로 옳은 것은?",opts:["자신의 내면과 행동이 일치하는 것","올바른 판단을 제시하는 능력","신체적으로 매력적인 정도","대중을 따르려는 심리"],ans:0,exp:"진정성=내면과 행동의 일치(Harter), 진정한 자아(Snyder)."},
+{ch:"5장",q:"스미스가 제시한 동조의 두 가지 이유는?",opts:["규범적 영향력·정보적 영향력","전문성·신뢰성","초두효과·최신효과","세분화·극화"],ans:0,exp:"규범적(사회적 지지)·정보적(지식 확장) 영향력."},
+{ch:"5장",q:"집단 규모와 동조에서 처음 의견을 낸 사람의 영향력이 가장 크다고 보는 이론은?",opts:["사회적 영향력 모델","사회적 감화이론","대중사회이론","이용과 충족이론"],ans:1,exp:"감화이론. 영향력 모델은 둘째·셋째가 더 크다."},
+{ch:"5장",q:"여럿이 함께 일할 때 동기와 노력이 줄어드는 현상은?",opts:["몰개인화","사회적 태만현상","규범적 영향력","후광효과"],ans:1,exp:"사회적 태만. 몰개인화는 익명성으로 자기 지각이 낮아지는 것."},
+/* 6장 (20) */
+{ch:"6장",q:"메시지의 구성요소로 옳은 것은?",opts:["내용·기호·처리","주의·흥미·욕망","인지·정서·행동","용기·운반체·통로"],ans:0,exp:"메시지 구성요소=내용·기호·처리."},
+{ch:"6장",q:"라슨의 메시지 작성 7가지 방법에 해당하지 않는 것은?",opts:["생생함","간결함","병렬구조","위협"],ans:3,exp:"위협은 소구 방법이며 라슨의 7가지에 없다."},
+{ch:"6장",q:"인지적 구두쇠 개념과 직접 연결되는 메시지 작성 원칙은?",opts:["유머","간결함","상상의 사용","병렬구조"],ans:1,exp:"인지적 노력을 아끼려는 성향→간결함."},
+{ch:"6장",q:"메라비언의 법칙에서 언어:청각:시각의 비율은?",opts:["7:38:55","55:38:7","33:33:34","50:25:25"],ans:0,exp:"언어 7·청각 38·시각 55."},
+{ch:"6장",q:"메라비언의 법칙에서 시각(55%)을 구성하는 요소는?",opts:["표정 35% + 태도 20%","목소리 38% + 표정 17%","단어 40% + 어조 15%","태도 30% + 어조 25%"],ans:0,exp:"시각 55%=표정 35%+태도 20%."},
+{ch:"6장",q:"일면적 메시지가 효과적인 수용자는?",opts:["반대 주장에 노출될 가능성이 큰 사람","교육수준이 높은 사람","사전 태도가 호의적인 사람","반대 의견을 가진 사람"],ans:2,exp:"일면적=사전 태도 호의적·노출 가능성 없음·교육수준 낮음."},
+{ch:"6장",q:"양면적 메시지가 더 효과적인 경우는?",opts:["교육수준이 낮을 때","사전 태도가 매우 호의적일 때","반대 주장에 노출될 가능성이 있고 교육수준이 높을 때","즉각적 반응만 필요할 때"],ans:2,exp:"양면적=반대 노출 가능·교육수준 높음."},
+{ch:"6장",q:"약한 공격 메시지에 미리 노출시켜 설득에 대한 저항력을 기르는 이론은?",opts:["접종이론","균형이론","사회판단이론","이용과 충족이론"],ans:0,exp:"맥과이어의 접종이론."},
+{ch:"6장",q:"광범위하게 공유되며 공격받은 적 없는 신념을 가리키는 용어는?",opts:["문화적 공리","보고 편향","취향문화","지구촌"],ans:0,exp:"cultural truism. 접종 안 되면 공격에 취약."},
+{ch:"6장",q:"명시적 결론 제시가 더 효과적인 상황은?",opts:["교육수준·관여도가 높을 때","스스로 결론을 내리게 할 때","교육수준이 낮고 즉각 반응이 필요할 때","설득효과를 오래 지속시킬 때"],ans:2,exp:"명시적=교육수준 낮음·관여도 낮음·즉각 반응."},
+{ch:"6장",q:"암시적 결론 제시의 특징으로 옳은 것은?",opts:["거부감을 유발하기 쉽다","수용자가 스스로 결론을 도출한다","교육수준이 낮을수록 효과적이다","해석 범위를 제한한다"],ans:1,exp:"암시적=스스로 도출, 설득효과 지속, 교육수준·관여도 높을 때."},
+{ch:"6장",q:"메시지 첫 부분에 핵심 주장을 배치하는 효과는?",opts:["초두효과","최신효과","수면자 효과","후광효과"],ans:0,exp:"초두효과(primacy)."},
+{ch:"6장",q:"제시 순서 효과를 모의 배심원 공판 실험으로 검증한 학자는?",opts:["Hovland & Weiss","Miller & Campbell","McCracken","McGuire"],ans:1,exp:"Miller & Campbell(1959)."},
+{ch:"6장",q:"이성적 소구에 대한 설명으로 옳은 것은?",opts:["사랑·우정 등 감정에 호소","성능·품질 등 기능적 편익과 당위성을 강조","공포를 유발해 행동을 유도","이야기로 공감을 이끌어냄"],ans:1,exp:"2번이 이성적. 1·4는 감성/스토리텔링, 3은 위협."},
+{ch:"6장",q:"위협소구의 3가지 핵심요소에 해당하지 않는 것은?",opts:["사건의 유해성 크기","사건의 발생 가능성","대처 방안의 효율성","정보원의 신체적 매력"],ans:3,exp:"3요소=유해성·발생 가능성·대처 방안 효율성."},
+{ch:"6장",q:"유머소구가 작용하는 기제로 보기 어려운 것은?",opts:["사람들의 관심을 끎","정보원 호감도 증진","정보원 신뢰성 향상","공포를 통한 긴장 유발"],ans:3,exp:"공포 유발은 위협소구."},
+{ch:"6장",q:"성적소구의 부정적 영향으로 옳은 것은?",opts:["제품 회상도를 높인다","항상 긍정적 반응을 얻는다","제품 자체의 회상도를 저해할 수 있다","외모에 대한 인식을 개선한다"],ans:2,exp:"모델에만 집중해 제품 회상도 저해, 체형 왜곡 등."},
+{ch:"6장",q:"우리나라 비교소구 광고의 특징으로 옳은 것은?",opts:["주관적 인상만으로 비교 가능","객관적·입증 가능한 사실에 한해 가능","경쟁 브랜드를 절대 노출하지 않음","선발 기업에만 유리"],ans:1,exp:"한국은 객관적 사실만 허용. 후발기업에 유력하나 경쟁 인지도 상승 부작용."},
+{ch:"6장",q:"사랑·가족·우정의 온화한 정서에 호소하며 동양 문화권에서 효과적인 소구는?",opts:["위협소구","온정소구","패러디소구","비교소구"],ans:1,exp:"온정소구(예: 초코파이)."},
+{ch:"6장",q:"불완전한 정보를 제공해 소비자의 궁금증을 유발하는 광고 기법은?",opts:["티저광고","아트 주입","증언식 광고","비교광고"],ans:0,exp:"티저광고."},
+/* 7장 (20) */
+{ch:"7장",q:"광의의 매체를 구성하는 3요소에 해당하지 않는 것은?",opts:["메시지를 담는 용기","용기를 운반하는 운반체","메시지가 흐르는 통로","메시지를 해석하는 수용자"],ans:3,exp:"용기·운반체·통로(유통망). 수용자는 매체 구성요소가 아니다."},
+{ch:"7장",q:"신문 매체의 단점으로 옳은 것은?",opts:["기록성이 없다","보존성이 없다","수용자 선별 능력이 약하고 수명이 짧다","공시성이 없다"],ans:2,exp:"신문 장점=공시성·정기성·기록성·보존성 / 단점=선별 약함·수명 짧음·비용."},
+{ch:"7장",q:"텔레비전 매체의 단점으로 보기 어려운 것은?",opts:["규제가 엄함","기록성이 떨어짐","제작비가 비쌈","교육수준이 낮으면 접근이 어렵다"],ans:3,exp:"TV는 교육수준과 무관하게 접근 가능(장점)."},
+{ch:"7장",q:"라디오 매체의 특성으로 옳은 것은?",opts:["선택성·즉시성·이동성","높은 기록성","시각적 표현력","엄격한 보존성"],ans:0,exp:"라디오=선택성·즉시성·이동성, 단점은 분산·일회성."},
+{ch:"7장",q:"케이블TV가 일반 TV의 약점을 보완하는 강점은?",opts:["속보성","선별성(특정 계층 도달)","보존성","기록성"],ans:1,exp:"케이블=특정 계층 도달→선별성."},
+{ch:"7장",q:"인터넷 매체의 단점으로 옳은 것은?",opts:["쌍방향이 불가능","정보량이 적음","익명성의 폐해와 지각된 침입성","효과 측정이 어려움"],ans:2,exp:"인터넷 단점=익명성 폐해·침입성."},
+{ch:"7장",q:"넷플릭스 같은 OTT의 성공 비결로 가장 적절한 것은?",opts:["일방향 대량 송출","고객 데이터 기반 맞춤형 추천 알고리즘","공중파 규제 활용","종이 기반 보존성"],ans:1,exp:"맞춤형 추천 알고리즘."},
+{ch:"7장",q:"스마트 미디어의 특성으로 옳은 것은?",opts:["이동성·양방향성·실시간","공시성·정기성·기록성","익명성·일회성·분산성","보존성·전문성·시간 무제약"],ans:0,exp:"스마트미디어=이동성·양방향성·실시간."},
+{ch:"7장",q:"스마트 광고를 정의하는 두 핵심 속성은?",opts:["상호작용성 + 개인 맞춤형","공시성 + 보존성","익명성 + 속보성","현장성 + 선택성"],ans:0,exp:"Interactivity + Customization."},
+{ch:"7장",q:"전통 광고와 비교한 스마트 미디어 광고의 특징으로 옳은 것은?",opts:["Identified sponsor를 강조","Nonpersonal communication 중심","Interactivity와 Customization을 강조","무료(Unpaid) 노출이 원칙"],ans:2,exp:"전통(Identified sponsor/Paid/Nonpersonal)→스마트(Interactivity/Paid/Customization)."},
+{ch:"7장",q:"스마트 미디어 광고 유형 4가지에 해당하지 않는 것은?",opts:["능동형 타겟 광고","정보 전달형 광고","콘텐츠 결합형 광고","위협 소구형 광고"],ans:3,exp:"4유형=능동형 타겟·정보 전달형·콘텐츠 결합형·라이프스타일 밀착형."},
+{ch:"7장",q:"AR의 낮은 몰입도와 VR의 이질감을 보완해 상호작용을 강화한 기술은?",opts:["QR코드","LBS","혼합현실(MR)","SMS"],ans:2,exp:"혼합현실(MR)."},
+{ch:"7장",q:"미디어 결정론(기술결정론)과 대척점에 있는 관점은?",opts:["문화결정론","행동주의","기능주의","구조주의"],ans:0,exp:"기술 vs 문화(인본적 지성) 결정론."},
+{ch:"7장",q:"맥루한의 미디어는 메시지다가 의미하는 바로 가장 적절한 것은?",opts:["메시지 내용이 매체보다 중요하다","어떤 미디어로 전달되느냐가 수용 양상을 좌우한다","미디어는 효과에 영향을 주지 않는다","메시지는 매체와 무관하다"],ans:1,exp:"내용보다 미디어 특성이 중요(맥루한)."},
+{ch:"7장",q:"미디어를 인간 감각의 확장으로 보고 지구촌을 처음 사용한 학자는?",opts:["이니스","맥루한","포스트만","바우어"],ans:1,exp:"맥루한."},
+{ch:"7장",q:"맥루한의 핫미디어에 해당하는 것은?",opts:["텔레비전","만화","전화","영화"],ans:3,exp:"핫=서적·사진·영화·디지털오디오. TV·만화·전화는 쿨."},
+{ch:"7장",q:"맥루한의 쿨미디어의 특징으로 옳은 것은?",opts:["정세도가 높고 참여도가 낮다","정세도가 낮고 참여도가 높다","해독이 필요 없다","정보량이 많고 잘 정의되어 있다"],ans:1,exp:"쿨=정세도 낮음·참여도 높음·해독 필요."},
+{ch:"7장",q:"이니스의 시간구속적 미디어의 특징으로 옳은 것은?",opts:["인쇄·전자 매체로 확장·지배력을 지님","원고·구두 중심으로 제한된 분배력, 전통적 권위를 선호","상업주의·제국을 성립시킴","공간적 확장에 유리"],ans:1,exp:"시간구속적=원고·구두, 전통적 권위. 공간구속적=인쇄·전자, 확장·지배."},
+{ch:"7장",q:"이니스가 창시한 학파와 핵심 개념의 연결로 옳은 것은?",opts:["토론토 학파 - 커뮤니케이션의 편중","프랑크푸르트 학파 - 문화산업","시카고 학파 - 상징적 상호작용","콜롬비아 학파 - 2단계 유통"],ans:0,exp:"이니스=토론토 학파, 커뮤니케이션의 편중."},
+{ch:"7장",q:"닐 포스트만이 말한, 기술에 사유 세계가 지배받는 문화를 가리키는 용어는?",opts:["지구촌","테크노폴리","취향문화","이중경제"],ans:1,exp:"테크노폴리(technopoly)."},
+/* 8장 (20) */
+{ch:"8장",q:"공간적으로 흩어져 있고 이질적·익명적이며 상호작용이 없는 집단을 가리키는 것은?",opts:["대중(mass)","공중(public)","군중(crowd)","취향공중"],ans:0,exp:"대중. 공중=특정 문제에 관심·찬반, 군중=같은 장소에 모인 집단."},
+{ch:"8장",q:"미디어가 수동적 수용자에게 직접 강력한 효과를 미친다고 보는 이론은?",opts:["이용과 충족이론","탄환이론(피하주사 이론)","사회판단이론","접종이론"],ans:1,exp:"탄환·피하주사 이론=수동적 수용자관."},
+{ch:"8장",q:"수용자를 수동적으로 보게 한 배경이 아닌 것은?",opts:["대중사회이론","행동주의 심리학(S→R)","당시의 사회 상황(전쟁·혁명)","이용과 충족이론"],ans:3,exp:"이용과 충족이론은 능동적 수용자관의 근거."},
+{ch:"8장",q:"수용자가 특정 욕구 충족을 위해 미디어를 능동적으로 소비한다고 보는 이론은?",opts:["탄환이론","이용과 충족이론","대중사회이론","미디어 결정론"],ans:1,exp:"이용과 충족이론."},
+{ch:"8장",q:"시장으로서의 수용자 개념에서 이중경제(dual economy)가 의미하는 것은?",opts:["직접 판매 + 수용자(광고)를 판매","생산 + 소비","공영 + 민영","구독 + 기부"],ans:0,exp:"콘텐츠 직접 판매 + 수용자를 광고주에게 판매."},
+{ch:"8장",q:"자아의식·상호작용 가능성·자율적 통제력을 지닌 수용자 개념을 연구한 학자는?",opts:["맥루한","라자스펠드","이니스","McCracken"],ans:1,exp:"공중으로서의 수용자(라자스펠드)."},
+{ch:"8장",q:"지역·사회적 배경보다 각자의 관심·취향에 따라 미디어를 선택하는 수용자는?",opts:["대중으로서의 수용자","취향공중으로서의 수용자","집합체로서의 수용자","저항운동자로서의 수용자"],ans:1,exp:"취향공중(취향문화·팬덤)."},
+{ch:"8장",q:"시청료 거부운동, TV 끄기 운동에 참여하는 수용자 유형은?",opts:["시장으로서의 수용자","저항 운동자로서의 수용자","집합체로서의 수용자","미디어 해석자로서의 수용자"],ans:1,exp:"저항 운동자로서의 수용자."},
+{ch:"8장",q:"다채널 환경에서 자기 취향 내용만 접하고 다른 내용은 회피하는 현상은?",opts:["수용자 세분화","수용자 극화","몰개인화","사회적 태만"],ans:1,exp:"극화. 세분화=채널 수에 비례해 수용자가 나뉨."},
+{ch:"8장",q:"능동적 수용자 대두의 배경이 된 심리학적 관점은?",opts:["S→R 모델","S→O→R 모델","자극-반응의 단순 연결","조건반사"],ans:1,exp:"신행동주의 S→O→R(유기체 O의 능동적 처리)."},
+{ch:"8장",q:"수용자가 자신의 신념과 일치하는 정보에 선택적으로 노출되는 현상은?",opts:["선별적 노출","몰개인화","후광효과","극화"],ans:0,exp:"선별적 노출(selective exposure)."},
+{ch:"8장",q:"바우어가 제시한 능동적(완고한) 수용자의 속성이 아닌 것은?",opts:["중재자","정보추구자","문제해결자","수동적 정보 수신자"],ans:3,exp:"바우어의 수용자는 선별적으로 수용하는 능동적 정보처리자."},
+{ch:"8장",q:"Biocca의 수용자 능동성 개념에 해당하지 않는 것은?",opts:["선택성","공리성","의도성","익명성"],ans:3,exp:"선택성·공리성·의도성·저항성·관여성. 익명성은 아님."},
+{ch:"8장",q:"기존 제품을 자신만의 방식으로 재창조해 사용하는 소비자를 가리키는 용어는?",opts:["모디슈머","소셜슈머","스마트슈머","블루슈머"],ans:0,exp:"모디슈머(modify+consumer). 재창조."},
+{ch:"8장",q:"효과위계 모형의 단계 순서로 옳은 것은?",opts:["인지→지식→호감→선호→확신→구매","주의→흥미→욕망→기억→행동","공감→자기확인→참여→공유","인지→흥미→검색→행동→공유"],ans:0,exp:"2번 AIDMA, 3번 SIPS, 4번 AISAS."},
+{ch:"8장",q:"효과위계 모형에서 태도를 나누는 세 가지 차원은?",opts:["인지적·정서적·행동적","주의·흥미·기억","선택·공리·의도","근접·유사·연속"],ans:0,exp:"인지(Cognition)·정서(Affective)·행동(Conative)."},
+{ch:"8장",q:"AIDMA 모형의 단계로 옳은 것은?",opts:["주의→흥미→욕망→기억→행동","인지→지식→호감→선호","공감→자기확인→참여→공유","주의→지각→이해→학습"],ans:0,exp:"Attention→Interest→Desire→Memory→Action."},
+{ch:"8장",q:"덴츠가 제시한 SNS 시대 모델 SIPS의 첫 단계는?",opts:["검색(Search)","공감(Sympathy)","주의(Attention)","구매(Purchase)"],ans:1,exp:"SIPS=공감→자기확인→참여→공유·확산."},
+{ch:"8장",q:"게슈탈트 집단화의 법칙에 해당하지 않는 것은?",opts:["근접성","유사성","연속성","프레그난쯔"],ans:3,exp:"집단화=근접성·유사성·연속성·공동운명·완결. 프레그난쯔는 단순화의 법칙."},
+{ch:"8장",q:"보고 싶은 이미지는 전경, 나머지는 배경이 되는 게슈탈트 법칙은?",opts:["근접성의 법칙","전경-배경의 법칙","공동운명의 법칙","유사성의 법칙"],ans:1,exp:"전경-배경의 법칙(루빈의 컵)."}
+];
+
+let mcqDeck=[];
+
+const SAQ=[
+{ch:"5장",q:"정보원의 공신력(credibility)을 구성하는 두 가지 요소를 쓰시오.",a:"전문성(Expertness)과 신뢰성(Trustworthiness)",kw:["전문성","신뢰성"]},
+{ch:"5장",q:"유명인 광고효과를 설명하는 이론 중, 유명인의 문화적 의미가 제품을 거쳐 소비자에게 전이된다고 보는 모델의 이름을 쓰시오.",a:"의미전이모델(Meaning transfer model, McCracken)",kw:["의미전이모델","McCracken"]},
+{ch:"5장",q:"집단 규모 차원에서 '첫 제시자의 영향력이 가장 크다'고 보는 이론과 '둘째·셋째의 영향력이 더 크다'고 보는 이론을 각각 쓰시오.",a:"사회적 감화이론(첫 제시자 영향력 최대) / 사회적 영향력 모델(둘째·셋째가 더 크나, 규모가 커지면 동조 압력 감소)",kw:["사회적 감화이론","사회적 영향력 모델"]},
+{ch:"6장",q:"라슨의 메시지 작성 방법 중 '인지적 구두쇠(cognitive miser)' 개념과 직접 연결되는 것은 무엇인가?",a:"간결함. 사람들은 인지적 노력에 시간·노력을 쓰고 싶어하지 않으므로 메시지를 간결하게 작성한다.",kw:["간결함"]},
+{ch:"6장",q:"메라비언의 법칙에서 첫인상을 결정하는 언어 : 청각 : 시각의 비율을 쓰시오.",a:"7% : 38% : 55% (언어 7, 청각 38, 시각 55)",kw:["7","38","55"]},
+{ch:"6장",q:"맥과이어의 접종이론에서, 한 문화에서 광범위하게 공유되며 공격받은 적이 없는 신념을 가리키는 용어를 쓰시오.",a:"문화적 공리(cultural truism). 예: 자유·민주주의. 접종되지 않으면 체계적 공격에 취약하다.",kw:["문화적 공리","cultural truism"]},
+{ch:"6장",q:"위협소구에 작용하는 3가지 핵심요소를 쓰시오.",a:"① 묘사된 사건의 유해성 크기 ② 사건의 발생 가능성 ③ 제안된 대처 방안의 효율성",kw:["유해성 크기","발생 가능성","대처 방안 효율성"]},
+{ch:"7장",q:"맥루한이 정세도·참여도에 따라 미디어를 나눈 두 구분을 쓰고, 각각의 예를 하나씩 드시오.",a:"핫미디어(정세도 높음·참여도 낮음: 서적·사진·영화) / 쿨미디어(정세도 낮음·참여도 높음: TV·만화·전화)",kw:["핫미디어","쿨미디어"]},
+{ch:"7장",q:"광의의 매체를 구성하는 3가지 요소를 쓰시오.",a:"① 메시지를 담는 용기(vehicle) ② 용기를 운반하는 운반체 ③ 메시지가 흐르는 통로(channel)·유통망",kw:["용기","운반체","통로(유통망)"]},
+{ch:"8장",q:"'시장으로서의 수용자' 개념에서 미디어 상품의 '이중경제(dual economy)'가 의미하는 두 가지 판매를 쓰시오.",a:"① 직접 판매(구독료·관람료 등 콘텐츠를 수용자에게 판매) ② 수용자를 판매(수용자를 광고주에게 판매)",kw:["직접 판매","수용자 판매(광고)"]},
+{ch:"8장",q:"바우어가 정립한, 이성적·주체적·자립적 시민으로서의 수용자 개념을 무엇이라 하는가?",a:"완고한 수용자(능동적 수용자). 중재자·자아방어자·정보처리자·정보추구자·문제해결자 등의 속성을 지닌다.",kw:["완고한 수용자","능동적 수용자"]},
+{ch:"8장",q:"게슈탈트 '집단화의 법칙' 5가지를 쓰시오.",a:"근접성 · 유사성 · 연속성 · 공동운명 · 완결(폐쇄성)",kw:["근접성","유사성","연속성","공동운명","완결(폐쇄성)"]},
+{ch:"8장",q:"효과위계 모형에서 태도를 세 가지 차원으로 나누면 무엇인가?",a:"인지적 태도(Cognition) → 정서적 태도(Affective) → 행동적 태도(Conative)",kw:["인지적","정서적","행동적"]},
+{ch:"8장",q:"덴츠가 제시한 SNS 시대 정보처리 모델 'SIPS'의 네 단계를 순서대로 쓰시오.",a:"공감(Sympathy) → 자기확인(Identity) → 참여(Participation) → 공유·확산(Share & Spread)",kw:["공감","자기확인","참여","공유·확산"]}
+];
+
+let mqi=0, mScore={o:0,x:0}, mAnswered=false;
+let sqi=0, sScore={o:0,x:0}, sRevealed=false;
+
+function showQuizSub(s){
+  document.getElementById('qsMcq').classList.toggle('on',s==='mcq');
+  document.getElementById('qsSaq').classList.toggle('on',s==='saq');
+  document.getElementById('mcqWrap').style.display = s==='mcq'?'block':'none';
+  document.getElementById('saqWrap').style.display = s==='saq'?'block':'none';
+}
+
+/* --- 객관식 --- */
+function showMcqStart(){
+  document.getElementById('mcqProg').textContent='객관식 · 총 '+MCQ_ALL.length+'문항';
+  document.getElementById('mcqScoreBox').textContent='';
+  let h=`<div class="q-result" style="padding:26px 12px">
+    <h3>📝 객관식 예상문제</h3>
+    <p>장별 20문항씩 총 ${MCQ_ALL.length}문항.<br>아래 버튼을 누르면 전체에서 <b>무작위 20문항</b>이 출제됩니다.</p>
+    <div class="q-nav" style="margin-bottom:16px"><button class="q-btn primary" onclick="startExam()">🎲 예상문제 응시하기 (무작위 20문항)</button></div>
+    <p style="font-size:12.5px;margin-bottom:9px">또는 장별로 전체(20문항) 풀기</p>
+    <div class="exam-chrow">
+      <button class="exam-ch" style="background:var(--ch5)" onclick="startChapter('5장')">5장</button>
+      <button class="exam-ch" style="background:var(--ch6)" onclick="startChapter('6장')">6장</button>
+      <button class="exam-ch" style="background:var(--ch7)" onclick="startChapter('7장')">7장</button>
+      <button class="exam-ch" style="background:var(--ch8)" onclick="startChapter('8장')">8장</button>
+    </div>
+  </div>`;
+  document.getElementById('mcqCard').innerHTML=h;
+}
+function pickRandom(arr,n){ let a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a.slice(0,n); }
+function startExam(){ mcqDeck=pickRandom(MCQ_ALL,20); mqi=0; mScore={o:0,x:0}; renderMCQ(); }
+function startChapter(ch){ let pool=MCQ_ALL.filter(c=>c.ch===ch); mcqDeck=pickRandom(pool,pool.length); mqi=0; mScore={o:0,x:0}; renderMCQ(); }
+function renderMCQ(){
+  mAnswered=false;
+  const c=mcqDeck[mqi];
+  document.getElementById('mcqProg').textContent=`${c.ch} · ${mqi+1} / ${mcqDeck.length}문항`;
+  document.getElementById('mcqScoreBox').innerHTML=`<span class="sc-o">○ ${mScore.o}</span> &nbsp; <span class="sc-x">✕ ${mScore.x}</span>`;
+  let h=`<span class="q-tag" style="background:${chTag[c.ch]}">${c.ch}</span><div class="q-text">Q${mqi+1}. ${c.q}</div>`;
+  c.opts.forEach((o,i)=>{ h+=`<button class="opt" id="opt${i}" onclick="pickMCQ(${i})">${'①②③④⑤'[i]} ${o}</button>`; });
+  h+=`<div class="q-exp" id="mcqExp"></div>`;
+  h+=`<div class="q-nav"><button class="q-btn ghost" onclick="showMcqStart()">← 처음</button><button class="q-btn primary" id="mcqNext" onclick="nextMCQ()" style="opacity:.5;pointer-events:none">다음 →</button></div>`;
+  document.getElementById('mcqCard').innerHTML=h;
+}
+function pickMCQ(i){
+  if(mAnswered) return;
+  mAnswered=true;
+  const c=mcqDeck[mqi];
+  for(let k=0;k<c.opts.length;k++){
+    const el=document.getElementById('opt'+k);
+    el.onclick=null;
+    if(k===c.ans){ el.classList.add('correct'); el.innerHTML+=`<span class="mark">○</span>`; }
+    else if(k===i){ el.classList.add('wrong'); el.innerHTML+=`<span class="mark">✕</span>`; }
+    else el.classList.add('dim');
+  }
+  if(i===c.ans) mScore.o++; else mScore.x++;
+  const exp=document.getElementById('mcqExp');
+  exp.innerHTML=`<b>${i===c.ans?'정답! ':'정답: '+'①②③④⑤'[c.ans]+'번 — '}</b>${c.exp}`;
+  exp.classList.add('show');
+  document.getElementById('mcqScoreBox').innerHTML=`<span class="sc-o">○ ${mScore.o}</span> &nbsp; <span class="sc-x">✕ ${mScore.x}</span>`;
+  const nx=document.getElementById('mcqNext'); nx.style.opacity='1'; nx.style.pointerEvents='auto';
+  if(mqi===mcqDeck.length-1) nx.textContent='결과 보기';
+}
+function nextMCQ(){ if(!mAnswered) return; if(mqi<mcqDeck.length-1){mqi++;renderMCQ();} else mcqResult(); }
+function mcqResult(){
+  const pct=Math.round(mScore.o/mcqDeck.length*100);
+  let msg = pct>=80?'훌륭해요! 시험 준비가 잘 됐어요.':pct>=60?'좋아요. 틀린 부분만 다시 보면 완벽!':'개념 보기·전체 정리로 한 번 더 복습해봐요.';
+  document.getElementById('mcqCard').innerHTML=
+    `<div class="q-result"><h3>🎯 응시 완료!</h3><p>${mcqDeck.length}문제 중 <b>${mScore.o}개</b> 정답 · 정답률 ${pct}%<br>${msg}</p>
+     <div class="q-nav"><button class="q-btn ghost" onclick="showMcqStart()">처음 화면</button><button class="q-btn primary" onclick="startExam()">🎲 새 문제로 다시</button></div></div>`;
+}
+
+/* --- 주관식 --- */
+function renderSAQ(){
+  sRevealed=false;
+  const c=SAQ[sqi];
+  document.getElementById('saqProg').textContent=`주관식 ${sqi+1} / ${SAQ.length}`;
+  document.getElementById('saqScoreBox').innerHTML=`<span class="sc-o">맞음 ${sScore.o}</span> &nbsp; <span class="sc-x">아쉬움 ${sScore.x}</span>`;
+  let h=`<span class="q-tag" style="background:${chTag[c.ch]}">${c.ch}</span><div class="q-text">Q. ${c.q}</div>`;
+  h+=`<textarea class="saq-input" id="saqInput" placeholder="여기에 답을 적어보고 아래 버튼으로 확인하세요"></textarea>`;
+  h+=`<div class="saq-reveal" id="saqRev"></div>`;
+  h+=`<div class="q-nav"><button class="q-btn ghost" onclick="restartSAQ()">↺ 처음부터</button><button class="q-btn primary" id="saqRevBtn" onclick="revealSAQ()">정답 확인</button></div>`;
+  document.getElementById('saqCard').innerHTML=h;
+}
+function revealSAQ(){
+  if(sRevealed) return; sRevealed=true;
+  const c=SAQ[sqi];
+  let kw = c.kw? `<div class="saq-kw">핵심 키워드: ${c.kw.map(k=>`<span>${k}</span>`).join('')}</div>`:'';
+  document.getElementById('saqRev').innerHTML=`<span class="lbl">모범답안</span>${c.a}${kw}
+    <div class="q-selfgrade"><button class="q-self x" onclick="gradeSAQ(false)">아쉬워요</button><button class="q-self o" onclick="gradeSAQ(true)">맞았어요 ○</button></div>`;
+  document.getElementById('saqRev').classList.add('show');
+  document.getElementById('saqRevBtn').style.display='none';
+}
+function gradeSAQ(ok){
+  if(ok) sScore.o++; else sScore.x++;
+  if(sqi<SAQ.length-1){ sqi++; renderSAQ(); } else saqResult();
+}
+function saqResult(){
+  const pct=Math.round(sScore.o/SAQ.length*100);
+  document.getElementById('saqCard').innerHTML=
+    `<div class="q-result"><h3>✍️ 주관식 완료!</h3><p>${SAQ.length}문제 중 스스로 <b>${sScore.o}개</b> 맞음 · ${pct}%</p>
+     <div class="q-nav"><button class="q-btn primary" onclick="restartSAQ()">↺ 다시 풀기</button></div></div>`;
+}
+function restartSAQ(){ sqi=0; sScore={o:0,x:0}; renderSAQ(); }
+
+function initQuiz(){ showMcqStart(); renderSAQ(); }
+
 buildDeck();
 buildList();
+initQuiz();
 </script>
 </body>
 </html>
