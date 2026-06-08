@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>설득커뮤니케이션 기말 개념 학습 (5~8장)</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<style>
+  :root{
+    --bg:#F4ECDD; --paper:#FFFDF7; --ink:#2E2620; --sub:#7A6A55;
+    --line:#E3D6BE; --accent:#9C5A2A; --accent2:#C8852F;
+    --ch5:#B5651D; --ch6:#3E7C5A; --ch7:#3B5E8C; --ch8:#8C3B5E;
+    --o:#3E7C5A; --x:#B23A48;
+    --r:14px; --shadow:0 10px 30px rgba(70,50,25,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Pretendard Variable","Pretendard",-apple-system,sans-serif;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(200,133,47,.10), transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(156,90,42,.10), transparent 45%),
+      var(--bg);
+    color:var(--ink); min-height:100vh; padding:22px 14px 60px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+  header{text-align:center;margin-bottom:18px}
+  .kicker{font-size:12px;letter-spacing:.32em;color:var(--accent);font-weight:700;text-transform:uppercase}
+  h1{font-family:"Pretendard Variable","Pretendard",sans-serif;font-size:27px;margin:6px 0 4px;letter-spacing:-.5px;font-weight:800}
+  .sub{font-size:13px;color:var(--sub)}
+
+  .modebar{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px;margin:16px auto;width:fit-content;box-shadow:var(--shadow)}
+  .modebtn{border:none;background:transparent;color:var(--sub);font-weight:700;font-size:13px;padding:8px 18px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .modebtn.on{background:var(--accent);color:#fff}
+
+  .top-bar{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow);margin-bottom:14px}
+  .cat-select{width:100%;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;cursor:pointer;appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%239C5A2A' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center}
+  .score-row{display:flex;gap:8px;margin-top:12px}
+  .sb{flex:1;text-align:center;font-weight:800;font-size:14px;padding:8px;border-radius:10px}
+  .so{background:rgba(62,124,90,.13);color:var(--o)}
+  .sx{background:rgba(178,58,72,.13);color:var(--x)}
+  .prog-wrap{margin-top:12px}
+  .prog-bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+  .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .25s}
+  .prog-text{font-size:12px;color:var(--sub);text-align:right;margin-top:5px;font-weight:600}
+
+  /* CARD */
+  .total-count{text-align:center;font-size:12px;color:var(--sub);margin-bottom:8px;font-weight:600}
+  .card-wrap{position:relative;min-height:330px;perspective:1400px}
+  .pane{position:absolute;inset:0;border-radius:18px;padding:26px 24px;display:flex;flex-direction:column;
+    border:1px solid var(--line);box-shadow:var(--shadow);backface-visibility:hidden;transition:transform .5s;cursor:pointer}
+  .card-front-pane{background:var(--paper)}
+  .card-back-pane{background:linear-gradient(160deg,#FFFDF7,#F7EEDB);transform:rotateY(180deg)}
+  .flipped .card-front-pane{transform:rotateY(-180deg)}
+  .flipped .card-back-pane{transform:rotateY(0)}
+  .card-hint{font-size:11px;color:var(--sub);text-align:center;letter-spacing:.05em;margin-bottom:10px}
+  .card-cat{display:inline-block;align-self:center;font-size:11px;font-weight:800;color:#fff;padding:4px 12px;border-radius:99px;margin-bottom:14px}
+  .card-q{font-size:21px;font-weight:800;line-height:1.5;text-align:center;margin:auto 0;letter-spacing:-.3px}
+  .card-a{font-size:15.5px;line-height:1.7;font-weight:600;white-space:pre-wrap}
+  .card-memo{margin-top:14px;padding-top:13px;border-top:1px dashed var(--line);font-size:13px;line-height:1.65;color:var(--accent);white-space:pre-wrap}
+  .card-memo:empty{display:none;border:none;margin:0;padding:0}
+  .back-label{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:.05em;margin-bottom:8px}
+
+  .action-row{display:flex;gap:9px;margin-top:16px}
+  .act{flex:1;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:14px;border-radius:12px;cursor:pointer;box-shadow:var(--shadow)}
+  .act.know{background:var(--o);color:#fff}
+  .act.again{background:var(--x);color:#fff}
+  .nav-row{display:flex;gap:9px;margin-top:9px}
+  .nav{flex:1;border:1.5px solid var(--line);background:var(--paper);color:var(--sub);font-family:inherit;font-weight:700;font-size:13px;padding:11px;border-radius:11px;cursor:pointer}
+  .nav:active{transform:scale(.98)}
+  .done-msg{text-align:center;padding:50px 20px;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+  .done-msg h2{font-size:22px;margin-bottom:10px}
+  .done-msg p{color:var(--sub);font-size:14px;line-height:1.7;margin-bottom:18px}
+
+  /* LIST VIEW */
+  #listView{display:none}
+  .ch-block{margin-bottom:18px}
+  .ch-head{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;padding:12px 14px;border-radius:12px;color:#fff;cursor:pointer;box-shadow:var(--shadow);user-select:none}
+  .ch-head .count{margin-left:auto;font-size:12px;font-weight:700;opacity:.85;background:rgba(255,255,255,.22);padding:3px 9px;border-radius:99px}
+  .ch-body{display:none;margin-top:8px}
+  .ch-block.open .ch-body{display:block}
+  .li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:8px}
+  .li-cat{font-size:10.5px;font-weight:800;color:var(--sub);letter-spacing:.04em;margin-bottom:4px}
+  .li-q{font-size:15px;font-weight:800;line-height:1.5;margin-bottom:7px}
+  .li-a{font-size:13.5px;line-height:1.65;color:#41382e;white-space:pre-wrap}
+  .li-memo{margin-top:7px;font-size:12.5px;line-height:1.6;color:var(--accent);white-space:pre-wrap}
+  /* FULL VIEW */
+  #fullView{display:none}
+  .fv-ch{margin-bottom:26px}
+  .fv-chhead{font-size:19px;font-weight:800;color:#fff;padding:14px 16px;border-radius:14px;box-shadow:var(--shadow);position:sticky;top:0;z-index:5}
+  .fv-sec{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;margin-top:10px;box-shadow:var(--shadow)}
+  .fv-sec h3{font-size:16px;font-weight:800;margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid var(--line);color:var(--accent)}
+  .fv-sec h4{font-size:14.5px;font-weight:800;margin:15px 0 6px;color:var(--ink)}
+  .fv-sec p{font-size:14px;line-height:1.75;margin-bottom:8px;color:#3a322a}
+  .fv-sec ul{list-style:none;margin:4px 0 10px}
+  .fv-sec li{font-size:13.8px;line-height:1.7;padding-left:16px;position:relative;margin-bottom:4px;color:#3a322a}
+  .fv-sec li::before{content:"·";position:absolute;left:4px;color:var(--accent2);font-weight:900}
+  .fv-sec li ul{margin:3px 0 6px 6px}
+  .fv-sec li li::before{content:"–";color:var(--sub)}
+  .def{background:rgba(200,133,47,.10);border-left:4px solid var(--accent2);border-radius:0 8px 8px 0;padding:10px 13px;margin:6px 0 12px;font-size:14px;line-height:1.7}
+  .def b{color:var(--accent)}
+  .tip{background:rgba(62,124,90,.10);border-left:4px solid var(--ch6);border-radius:0 8px 8px 0;padding:9px 13px;margin:8px 0;font-size:13.3px;line-height:1.65;color:#2c4a39}
+  .eg{font-size:12.8px;color:var(--sub);font-style:normal;display:block;margin-top:3px}
+  .ftbl{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:13px}
+  .ftbl th,.ftbl td{border:1px solid var(--line);padding:7px 9px;text-align:left;line-height:1.5}
+  .ftbl th{background:rgba(156,90,42,.12);font-weight:800;color:var(--accent)}
+  .ftbl td:first-child{font-weight:700;white-space:nowrap}
+  footer{text-align:center;font-size:11.5px;color:var(--sub);margin-top:26px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">설득커뮤니케이션 기말</div>
+    <h1>개념 학습 · 5~8장</h1>
+    <div class="sub">정보원 · 메시지 · 매체 · 수용자(~전경과 배경의 법칙)</div>
+  </header>
+
+  <div class="modebar">
+    <button class="modebtn on" id="mCard" onclick="setMode('card')">🃏 플래시카드</button>
+    <button class="modebtn" id="mList" onclick="setMode('list')">📖 개념 보기</button>
+    <button class="modebtn" id="mFull" onclick="setMode('full')">📋 전체 정리</button>
+  </div>
+
+  <!-- CARD VIEW -->
+  <div id="cardView">
+    <div class="top-bar">
+      <select class="cat-select" id="catSel" onchange="changeCat()">
+        <option value="all">🔀 전체 셔플 (5~8장)</option>
+        <option value="ch5">── 5장 정보원 전체 ──</option>
+        <option value="5장·정보원 기초">5장 · 정보원 기초</option>
+        <option value="5장·정보원 유형">5장 · 정보원 유형</option>
+        <option value="5장·정보원 속성">5장 · 정보원 속성</option>
+        <option value="5장·집단과 동조">5장 · 집단과 동조</option>
+        <option value="ch6">── 6장 메시지 전체 ──</option>
+        <option value="6장·메시지 기초">6장 · 메시지 기초</option>
+        <option value="6장·메시지 처리">6장 · 메시지 처리</option>
+        <option value="6장·메시지 소구">6장 · 메시지 소구</option>
+        <option value="ch7">── 7장 매체 전체 ──</option>
+        <option value="7장·매체 기초">7장 · 매체 기초</option>
+        <option value="7장·매체 유형">7장 · 매체 유형</option>
+        <option value="7장·매체 흐름 모형">7장 · 매체 흐름 모형</option>
+        <option value="ch8">── 8장 수용자 전체 ──</option>
+        <option value="8장·수용자 개념">8장 · 수용자 개념</option>
+        <option value="8장·능동적 수용자">8장 · 능동적 수용자</option>
+        <option value="8장·메시지 처리-수용 과정">8장 · 처리-수용 과정(게슈탈트)</option>
+        <option value="weak">⭐ 틀린 카드만 복습</option>
+      </select>
+      <div class="score-row">
+        <span class="sb so" id="sO">O 0</span>
+        <span class="sb sx" id="sX">X 0</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-fill" id="pFill"></div></div>
+        <div class="prog-text" id="pText">0 / 0</div>
+      </div>
+    </div>
+
+    <div id="cardArea">
+      <div class="total-count" id="totalCount"></div>
+      <div class="card-wrap" id="cWrap">
+        <div class="pane card-front-pane" id="cFront" onclick="flip()">
+          <div class="card-hint">탭하면 정답이 나와요</div>
+          <div class="card-cat" id="cCat"></div>
+          <div class="card-q" id="cQ"></div>
+        </div>
+        <div class="pane card-back-pane" id="cBack" onclick="flip()">
+          <div class="back-label">정답 / 핵심</div>
+          <div class="card-a" id="cA"></div>
+          <div class="card-memo" id="cMemo"></div>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="act again" onclick="grade(false)">✕ 다시 볼래요</button>
+        <button class="act know" onclick="grade(true)">○ 알아요</button>
+      </div>
+      <div class="nav-row">
+        <button class="nav" onclick="prevCard()">← 이전</button>
+        <button class="nav" onclick="flip()">뒤집기</button>
+        <button class="nav" onclick="reshuffle()">🔀 다시 섞기</button>
+      </div>
+    </div>
+
+    <div class="done-msg" id="doneMsg" style="display:none">
+      <h2>🎉 한 바퀴 완료!</h2>
+      <p id="doneText"></p>
+      <div class="nav-row" style="max-width:340px;margin:0 auto">
+        <button class="nav" onclick="reviewWeak()">⭐ 틀린 것만 다시</button>
+        <button class="nav" onclick="reshuffle()">🔀 전체 다시</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="listView"></div>
+
+  <!-- FULL VIEW -->
+  <div id="fullView">
+
+  <div class="fv-ch">
+    <div class="fv-chhead" style="background:var(--ch5)">5장 · 설득 커뮤니케이터(정보원)</div>
+
+    <div class="fv-sec">
+      <h3>1. 설득 커뮤니케이터(정보원)의 의미</h3>
+      <div class="def"><b>설득 커뮤니케이터</b>: 다른 개인 또는 집단과 정보를 공유하기 원하는 개인 또는 조직</div>
+      <p>괴벨스는 "어떤 메시지가 수용자에게 받아들여지느냐의 여부는 전적으로 그 정보원의 신뢰도에 달렸다. 수용자 대중이 정보원의 권위를 지각하거나 정보원을 존경하면 그 선전 캠페인은 성공할 수 있다"고 보았다. 즉 <b>설득 효과는 정보원에 따라 달라질 수 있으며</b>, 동일한 내용·형식의 광고 메시지라도 어떠한 상황에서 누가 전달하느냐에 따라 수용자에게 상이한 효과를 유발할 수 있다.</p>
+      <h4>원천 유형에 따른 정보원의 구분</h4>
+      <ul>
+        <li><b>기업정보 원천</b> — 광고, 판매원, 포장 및 점포 내 정보 등</li>
+        <li><b>개인적 원천</b> — 가족, 친지</li>
+        <li><b>경험적 원천</b> — 직접 사용, 시험 조작</li>
+        <li><b>중립적 원천</b> — 소비자 보호원의 발행물, 방송 뉴스 등</li>
+      </ul>
+      <h4>광고주·매체·광고모델</h4>
+      <p>일반적으로 무명 모델보다 유명 모델의 기용이 효과적이다. 하지만 몇 가지 경우에는 무명 모델이 효과적인 경우도 있다.</p>
+      <ul>
+        <li>① 유명 모델의 중복 출연</li>
+        <li>② 제품과 모델의 낮은 연관성</li>
+        <li>③ 모델이 부정적 사건에 연루</li>
+      </ul>
+      <div class="tip">가상인간(로지·릴 미켈라)이 광고 블루칩으로 떠오른 이유: 사생활 스캔들 염려가 없고, CG로 시공간 제약 없이 연출 가능하며, 아프거나 늙지 않아 활동기간이 길고, 특정 고객을 겨냥한 맞춤형 광고에 유리하기 때문.</div>
+    </div>
+
+    <div class="fv-sec">
+      <h3>2. 정보원(광고모델)의 분류</h3>
+
+      <h4>1) 일반인 광고 모델</h4>
+      <div class="def"><b>정의</b>: 그가 광고하는 제품에 대한 일반적인 사용 경험 외에는 어떠한 전문지식도 가지고 있지 않을 것으로 기대되는 일반인</div>
+      <p><b>특성</b>: 수신자가 자신과 같은 지위에 있다고 지각 → 유사성·일체감 → 광고에 대한 인식 및 효과를 높임</p>
+      <p><b>장점</b></p>
+      <ul>
+        <li>① 소비자 증언은 소비자 신뢰감을 유도·증대</li>
+        <li>② 같은 연령층의 인물일 경우 표적소비자와의 동료의식 유발</li>
+        <li>③ 경쟁제품 대비 우수한 점이 있지만 소비자가 그 차이점을 인식하지 못할 때 효과적</li>
+        <li>④ 위험도가 낮은 일상용품은 일반 소비자 광고모델이 더 효과적</li>
+      </ul>
+      <p><b>단점</b></p>
+      <ul>
+        <li>① 증언식 광고에서 신뢰감을 얻기 위한 제작상의 어려움(모델의 자연스러운 증언 연출 어려움)</li>
+        <li>② 제품 사용 후 기대만큼의 만족을 얻지 못하면 오히려 광고에 대한 불신감이 커짐</li>
+      </ul>
+      <span class="eg">예) 현대자동차 '엑센트 영가이', 웅진코웨이 '시후 다큐 캠페인', 도브 'Real Beauty' 캠페인(다양한 체형·인종의 일반인 모델 → 기업 이미지 제고 + 사회적 인식 변화)</span>
+
+      <h4>2) 유명인 광고 모델</h4>
+      <div class="def"><b>정의</b>: 연예인, 스포츠 스타와 같이 사회적으로 인지도가 높은 인물들</div>
+      <p><b>효과 경로</b>: 유명인이 보장하는 제품에 대한 신뢰도 → 제품에 대한 전이 → 제품에 대한 호의적인 태도</p>
+      <p>유명인 광고의 효과는 ① <b>정보원 신뢰도</b> 관점, ② <b>조화가설(Match-up hypothesis)</b>, ③ <b>의미전이모델(Meaning transfer model)</b>로 설명할 수 있다.</p>
+      <ul>
+        <li><b>조화가설</b>: 제품 특성과 광고 모델의 특성을 조화시킴으로써 광고 효과를 제고할 수 있다.</li>
+        <li><b>의미전이모델(McCracken, 1989)</b>: 유명인은 자신이 속한 사회를 대표하는 여러 문화적 의미의 조합이며, 광고를 통해 이러한 의미들이 제품으로 전이되고, 전이된 의미들은 제품 구매·이용을 통해 최종적으로 소비자에게 전이된다.</li>
+      </ul>
+      <p><b>장점</b></p>
+      <ul>
+        <li>① 브랜드 인지도·이미지를 높이거나 유지·회복하는 데 유리</li>
+        <li>② 감성적 소구 제품에 강력한 표현수법</li>
+        <li>③ 광고에 부정적인 태도를 보이는 수용자의 태도를 완화·중화</li>
+        <li>④ 광고 제작물의 시각적 통일 구성에 가장 강력한 통일체 역할</li>
+        <li>⑤ 동일 인물을 계속 기용해 브랜드에 일관된 이미지 부여</li>
+      </ul>
+      <p><b>단점</b></p>
+      <ul>
+        <li>① 엄청난 비용 / ② 광고 중복 출현에 따른 소비자 혼동</li>
+        <li>③ 소비자의 나이·성별·직업 등 속성에 따라 반응 민감도가 다름</li>
+        <li>④ 유명인 모델만 기억하고 메시지·상품명은 잊어버림</li>
+        <li>⑤ 유명인이 사회적 물의를 일으키거나 사고를 당할 경우 신뢰성 저하</li>
+        <li>⑥ 시간이 경과하면 설득효과의 강화가 소멸될 수 있음</li>
+      </ul>
+      <span class="eg">예) 전지현·백산수, 아이유·삼다수, 김연아·평창수 — 브랜드와 모델의 실체적·이미지적 연관성(Relevance)이 강할 때 시너지 / 아이스버킷챌린지 — 유명인 → 기업 → 개인으로 확산</span>
+
+      <h4>3) 전문가 광고 모델</h4>
+      <div class="def"><b>정의</b>: 그가 옹호하는 제품 계층에 대하여 전문적이고 우수한 지식을 소유한 개인 또는 집단</div>
+      <p><b>효과</b>: 전문가는 제품에 관하여 소비자들이 갖는 위험요소를 줄여줌 — 작동방법에 대한 무지 및 부작용 우려, 가족 내 역할의 올바른 수행 여부에 대한 의문, 제품 사용이 신체에 미치는 문제와 관련된 염려</p>
+      <p><b>장점</b>: ① 회사 대표·전문가가 나올 경우 제품에 신용력 부여 ② 모델의 신뢰성 확보 시 광고 신뢰성을 높은 수준으로 유지 ③ 관여도가 높은 상품의 모델로 적당</p>
+      <p><b>단점</b>: 신뢰성을 높이기 위한 메시지 구성이 힘들고 광고 연출이 쉽지 않음</p>
+      <span class="eg">예) 한국야쿠르트 하루야채 오한진 박사, LG 트롬 조성진 사장</span>
+    </div>
+
+    <div class="fv-sec">
+      <h3>3. 설득 효과에 영향을 미치는 정보원의 주요 속성</h3>
+
+      <h4>1) 공신력 (credibility)</h4>
+      <div class="def">커뮤니케이션 효과에 영향을 미치는 정보원의 특성으로, 수용자가 지각한 정보원의 <b>전문성(expertness)</b> 및 <b>신뢰성(trustworthiness)</b>을 지칭. <br><b>공신력 = 전문성 + 신뢰성</b></div>
+      <p><b>공신력의 4가지 속성</b>: ① 수용자의 입장에서 판단되는 개념 ② 다차원적 개념구성체 ③ 상황·맥락적 현상 ④ 역동성을 지님</p>
+      <ul>
+        <li><b>전문성</b>: 정보원이 주제·이슈에 대해 올바른 해답이나 정확한 판단을 제시할 수 있다고 수용자들이 지각하는 정도</li>
+        <li><b>신뢰성</b>: 정보원이 편견 없이 순수한 동기에서 자신의 입장·생각을 솔직하게 제시하고 있다고 수용자가 지각하는 것(커뮤니케이션 동기의 순수성·객관성)
+          <ul><li><b>보고 편향(reporting bias)</b>: 정보원이 개인적·상황적 요인으로 진실한 정보를 전달하지 않을 것이라고 믿는 신념</li></ul>
+        </li>
+      </ul>
+      <p><b>학습이론적 견해</b>: 전문성을 지닌 정보원의 설득효과가 높은 것은, 수용자들이 과거에 이러한 정보원의 메시지를 받아들여 더 많은 보상을 받았고, 이런 정보원이 올바른 입장을 제시함을 과거 경험으로 학습했기 때문.</p>
+      <div class="tip"><b>수면자 효과(sleeper effect)</b> — Hovland & Weiss 실험. 동일 메시지를 저명한 판사(높은 공신력)와 마약소지 혐의 기소자(낮은 공신력)가 전달했을 때, 처음엔 <b>높은 공신력 &gt; 낮은 공신력</b>. 그러나 시간이 지나면 정보원과 메시지 내용이 분리되어 높은 공신력 정보원의 효과는 낮아지고 낮은 공신력 정보원의 효과는 증가한다. 수용자가 정보원은 기억하지 못하고 내용만 기억하기 때문이다.</div>
+
+      <h4>2) 매력성</h4>
+      <ul>
+        <li><b>신체적 매력</b>: 정보원을 좋게 평가하게 만들거나 그 평가를 용인하게 하여 간접적으로 영향을 미침. 정보원을 잘 모를 때 더욱 중요하게 작용</li>
+        <li><b>심리적 매력</b>: 친근감·유사성·애호성 등 복합적 요인으로 구성</li>
+      </ul>
+      <span class="eg">예) 수용자와의 유사성을 이용한 박카스 광고</span>
+
+      <h4>3) 카리스마 (charisma)</h4>
+      <p>권력적 영향력이나 의견 지도력과 비슷한 것으로, 위대한 인물·지도자들이 지니는 권위적 영향력. 종교적/마력적 힘이나 특수한 인물의 비상한 능력에서 생겨나는 지도력을 의미하며, 위엄을 가지고 다른 사람을 쉽게 이끌거나 설복시키는 능력. 수용자의 의견·태도 변용에 중요한 영향을 미침.</p>
+
+      <h4>4) 진정성 (authenticity)</h4>
+      <p>'너 자신 그대로'라는 그리스 철학의 어원을 지님. 진정한 자아 그 자체(Snyder, 1979), 자신의 내면과 행동이 일치하는 것(Harter, 2002). 과장광고에 지친 소비자들에게 진정성 있는 광고는 강한 힘을 지님.</p>
+      <span class="eg">예) 기업은행 송해 광고 — 서민적이고 진정성 있는 모습으로 진실된 기업이미지 각인. 모델비는 김연아의 1/3도 안 되지만 광고효과는 2배.</span>
+
+      <h4>후광효과 (Halo effect)</h4>
+      <p>어떤 대상이나 사람에 대한 일반적인 견해가 그 대상·사람의 구체적인 특성을 평가하는 데 영향을 미치는 현상.</p>
+      <span class="eg">예) 삼성자동차 — 여러 제품에서 좋은 평가를 받는 삼성이 "자동차도 더 잘 만들 것"이라는 긍정적 속성 전이를 노림</span>
+    </div>
+
+    <div class="fv-sec">
+      <h3>4. 집단과 동조</h3>
+      <div class="def"><b>동조(conformity)</b>: 집단이 집단구성원들에게 가하는 실제 압력이나 구성원들이 스스로 느끼는 가상의 압력에 의해 개인의 행동·신념을 변화시키는 현상</div>
+      <p>동조현상은 실제 압력이 존재할 때는 물론, 실제 압력이 없어도 개인이 심리적으로 압력을 느끼기만 해도 발생한다. 다양한 집단은 보상과 처벌을 통해 구성원이 집단 규범을 따르도록 한다.</p>
+      <h4>스미스가 주장한 동조의 이유</h4>
+      <ul>
+        <li><b>규범적 영향력</b> — 사회적 지지를 얻기 위한 목적</li>
+        <li><b>정보적 영향력</b> — 자신과 세상에 대한 지식을 넓히기 위한 목적</li>
+      </ul>
+      <h4>쉐리프와 애쉬의 실험</h4>
+      <p>자신이 확실한 답을 알고 있더라도 동료의 답이 자신과 다를 경우 대부분 동료들의 답을 따랐다. 이 실험은 개인주의 성향이 강한 미국에서 이루어졌으므로, 집단의 영향력이 훨씬 큰 한국에서는 더 큰 동조현상이 나타날 것이라 예측 가능하다.</p>
+      <div class="tip"><b>뇌과학 연구</b> — 그레고리 번스(2005): 집단의견에 동조한 사람들은 시각·공간 지각을 통제하는 뇌 부위에서 지각 왜곡(인지적 착시)이 발생. 의도적 거짓말이 아니라 뇌 속 인지 왜곡. 에모리대 연구팀: 집단과 다른 의견을 낼 때 고통과 유사한 감정의 뇌 부위가 활성화(사회적 거절 = 신체적 통증과 유사). → 동조하면 소속감·편안함은 물론 반론에 필요한 인지 자원까지 아낄 수 있음. 단, 구성원 동질성이 강할수록 집단사고의 덫에 빠지기 쉬움.</div>
+      <p><b>악마의 대변인(Devil's advocate)</b>: 로마 카톨릭 교회가 사제 임명 시 일부러 후보자의 약점을 지적하는 역할을 둔 것처럼, 자유롭게 반론하는 사람이 불편할수록 집단사고의 덫에 갇혔을 가능성이 큼. "반론할 수 없는 것은 의견이 아니다."</p>
+      <h4>동조에 영향을 미치는 요소</h4>
+      <p><b>① 집단 특성</b> — 응집력(구성원의 친밀도·관여도)이 높을수록 동조↑, 규범을 따르지 않는 일탈자가 많을수록 동조↓</p>
+      <p><b>② 집단 규모</b></p>
+      <ul>
+        <li><b>사회적 감화이론</b>: 의견을 제일 처음 제시한 사람(조직을 만든 사람)의 영향력이 가장 크고, 두 번째 구성원부터는 영향력이 감소</li>
+        <li><b>사회적 영향력 모델</b>: 첫 번째보다 두 번째·세 번째 구성원의 영향력이 크다. 그러나 집단 규모가 커질수록 동조 압력은 적어진다(완전한 일치는 거의 불가능하므로)</li>
+      </ul>
+      <p><b>③ 개인적 특성</b> — 응집력이 강한 조직이라도 개인적 성향이 강한 사람은 동조하지 않음. 교육수준이 높고 합리적으로 정보를 처리하는 사람은 감정적·부화뇌동하는 사람보다 동조하지 않음</p>
+      <h4>집단 속에서의 개인 행동</h4>
+      <ul>
+        <li><b>몰개인화</b>: 익명성에 의해 집단 속에서 자신에 대한 지각이 낮아지고 타인의 평가에 신경을 덜 쓰게 되는 현상</li>
+        <li><b>사회적 태만현상</b>: 혼자 일할 때보다 여럿이 함께 일할 때 동기·노력이 줄어드는 현상(책임감·동기부여 감소)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fv-ch">
+    <div class="fv-chhead" style="background:var(--ch6)">6장 · 메시지</div>
+
+    <div class="fv-sec">
+      <h3>1. 메시지의 의미 및 구성 요소</h3>
+      <div class="def"><b>메시지(Message)</b>: 정보원이 수용자와 어떤 사상에 대한 정보·경험·감정·의견·의미 등을 공유하거나, 그 사상과 관련된 수용자의 태도·의견·행동 등을 변용시키기 위해 정보원이 수용자에게 보내는 커뮤니케이션 자극의 하나</div>
+      <p><b>메시지의 구성요소</b>: ① 메시지 내용 ② 메시지 기호 ③ 메시지 처리</p>
+      <h4>라슨의 메시지 작성 7가지 방법</h4>
+      <ul>
+        <li>① <b>다양한 단어 선택</b> — 쉽게 이해할 수 있는 단어·용어 필수, 신조어 사용, 젊은 세대 타깃이면 새로운 단어·은어 포함</li>
+        <li>② <b>적절한 어구 사용</b> — 은유·직유·두운법 등 사용(19C부터 광고에서 직유·은유 사용, 오래 기억되는 메시지)</li>
+        <li>③ <b>생생함</b> — 강렬한 형용사 첨가, 청각 광고는 물소리·목 넘김 소리 등 생생한 메시지 사용</li>
+        <li>④ <b>간결함</b> — <b>인지적 구두쇠(cognitive miser)</b>: 인지적 노력에 많은 노력·시간을 쓰고 싶어하지 않음. 단, 너무 가볍게 만든 메시지는 역효과</li>
+        <li>⑤ <b>병렬구조</b> — 비슷하거나 똑같은 단어·문장을 병렬</li>
+        <li>⑥ <b>상상의 사용</b> — 과자·청량음료·맥주 같은 기호품 광고에서 많이 사용(감각을 대신 느끼게 함)</li>
+        <li>⑦ <b>유머</b> — 주의를 끌기 위한 적절한 유머. 과도하거나 동떨어진 맥락이면 역효과</li>
+      </ul>
+      <div class="tip"><b>메라비언의 법칙(7:38:55)</b> — 첫 대면 시 인상·호감을 결정하는 요소: 바디랭귀지(시각) 55%(표정 35% + 태도 20%), 목소리(청각) 38%, 말의 내용(언어) 7%. → 비언어적 커뮤니케이션의 중요성, 말의 의도와 시각·청각 이미지를 일치시켜 전달해야 효과적.</div>
+    </div>
+
+    <div class="fv-sec">
+      <h3>2. 메시지 처리 방식</h3>
+      <p><b>메시지 처리</b>: 메시지 고안 과정에서 내용과 기호를 취사선택하여 수식·조직·배열하고, 여러 소구 방법을 사용해 효과를 극대화하는 것. 동일한 내용·기호라도 처리 방식에 따라 효과가 달라진다.</p>
+
+      <h4>1) 메시지 주장의 측면성 (sidedness)</h4>
+      <table class="ftbl">
+        <tr><th>구분</th><th>내용 / 효과</th></tr>
+        <tr><td>일면적 메시지</td><td>긍정적 측면만 언급. 사전 태도가 호의적인 사람, 반대 주장에 노출될 가능성이 없거나 교육수준이 낮은 사람에게 효과적</td></tr>
+        <tr><td>양면적 메시지</td><td>긍·부정 측면 모두 제시. 반대 의견을 갖거나 반대 주장에 노출될 가능성이 있을 때, 교육수준이 높을 때 효과적(정보원이 덜 편파적·더 객관적이라 여김). 단점: 반대 주장에 익숙지 못한 사람은 의문을 품을 수 있음</td></tr>
+      </table>
+      <div class="tip"><b>접종이론(inoculation theory)</b> — 맥과이어. 예방접종처럼, 기존 태도를 공격하는 메시지에 앞서 약한 수준의 메시지에 미리 노출시키면 저항력이 길러져 나중에 공격받아도 기존 태도를 유지할 수 있다. 다른 설득이론과 달리 '설득에 대한 저항' 형성에 관심. <br><b>문화적 공리(cultural truism)</b>: 한 문화에서 광범위하게 공유되며 공격당한 적도, 앞으로 공격당하리라 예상하지도 않는 신념(예: 자유·민주주의). 한국전쟁 중 중공군 포로수용소 미군 세뇌가 역사적 배경 — 접종되지 않은 상태라 체계적 공격에 속수무책이었다.</div>
+
+      <h4>2) 결론의 제시</h4>
+      <table class="ftbl">
+        <tr><th>구분</th><th>내용 / 효과</th></tr>
+        <tr><td>명시적 결론</td><td>메시지 내에 명확한 결론을 언급. 장점: 입장을 명확히 전달. 단점: 지나치다고 느끼면 거부감·불신(해석 범위 제한). 교육수준 낮음·관여도 낮음·즉각 반응을 얻는 데 효과적</td></tr>
+        <tr><td>암시적 결론</td><td>수용자가 스스로 결론을 도출하도록 암시. 장점: 설득효과 지속 유지. 단점: 이해 못 해 결론을 못 내리거나 잘못된 결론 도출 가능. 교육수준·관여도 높은 수용자에게 효과적</td></tr>
+      </table>
+      <p>결론 제시 효과에 영향을 주는 요인: <b>정보원 유형, 수용자 성향, 메시지 주제에 관한 관여도</b></p>
+
+      <h4>3) 메시지 내용의 제시 순서 — 초두 효과와 최신 효과</h4>
+      <ul>
+        <li><b>초두 효과(primacy effect)</b>: 메시지 첫 부분에 핵심 주장을 제시</li>
+        <li><b>최신 효과(recency effect)</b>: 메시지 끝에 핵심 주장을 제시</li>
+      </ul>
+      <p>Miller & Campbell(1959) 모의 배심원 공판 실험 — 원고·피고 주장이 동일해도 제시 순서에 따라 판결이 다르게 나타남. 제시 순서 효과는 수용자의 주목도, 주제 친숙도, 메시지 제시 사이의 간격 등 여러 맥락 요인에 따라 달라진다.</p>
+    </div>
+
+    <div class="fv-sec">
+      <h3>3. 메시지 소구 방법</h3>
+      <h4>1) 이성적 / 감성적 소구</h4>
+      <ul>
+        <li><b>이성적 소구</b>: 실증적·논리적 자료로 이성에 호소. 소비자가 얻을 이익에 초점, 제품의 성능·품질·가치 등 기능적 편익과 당위성을 강조해 합리적 의사결정에 호소</li>
+        <li><b>감성적 소구</b>: 감정·감성·가치관에 호소. <b>긍정적 감성소구</b>(사랑·우정·즐거움을 제품·기업에 전이), <b>부정적 감성소구</b>(공포·죄책감·두려움을 강조해 권고를 따르지 않으면 부정적 결과가 초래됨을 주장)</li>
+      </ul>
+      <h4>2) 스토리텔링 소구</h4>
+      <p>형식적 정보 전달에서 벗어나 재미있고 생생한 이야기로 공감을 이끌어내는 표현 기법. 상품에 담긴 의미·개인적 이야기를 제시해 몰입·재미를 일으키는 주관적·감성적 소구. <span class="eg">예) 미떼, 이집트 '판다 치즈'(Never say no to panda)</span></p>
+      <h4>3) 위협소구</h4>
+      <p>불안에서 해방되고 싶어하는 심리적 동기를 이용. 흐름: 위화감 유발 단서 제시 → 정서적 긴장감 유발 → 해소방법 모색 → 해소를 위한 주장 권고 → 수용.</p>
+      <p><b>3가지 핵심요소</b>: ① 묘사된 사건의 유해성 크기 ② 사건의 발생 가능성 ③ 제안된 대처 방안의 효율성. <b>적절한 수준의 위협이 효과적</b>이다. 공익광고는 위협소구를 사용하나 상품광고는 소비자를 위협하는 위협소구를 잘 사용하지 않는 경향.</p>
+      <h4>4) 유머소구</h4>
+      <p>유머를 작용하는 기제: ① 사람들의 관심을 끎 ② 정보원의 호감도 증진 ③ 정보원 신뢰성 향상 ④ 주의를 분산 ⑤ 사회적 증거로서 기능</p>
+      <h4>5) 성적소구</h4>
+      <p>성적 자극으로 의도하는 반응을 얻는 방법(증가 추세, 주로 시각적으로 전달·명백한 인과관계를 암시적으로 표현). <b>부정적 영향</b>: 거부감을 느끼는 소비자의 부정적 반응, 제품 자체 회상도 저해(잡지 모델에만 집중), 의도하지 않은 사회적 결과(외모·체형의 왜곡된 인식). <span class="eg">관련) 펨버타이징(Femvertising) — 성차별·성적 매력 부각에서 탈피, 독립적·주체적 여성 이미지 강조</span></p>
+      <h4>6) 패러디 소구</h4>
+      <p>기성 작품의 문체·운율을 교묘히 모방해 과장·풍자로 해학적으로 재구성. 친숙하게 다가가 흥미를 쉽게 유발하나, 원 작품에 대한 수용자의 친숙성을 가정해야 함.</p>
+      <h4>7) 온정소구</h4>
+      <p>직접·대리 사랑, 가족·우정을 경험하며 느끼는 긍정적·온화한 정서 소구. 한국적 정서로 광고에 많이 사용, 동양 문화권에서 효과적. <span class="eg">예) 오리온 초코파이, 입양광고, 안전벨트 광고, 경동나비엔</span></p>
+      <h4>8) 비교소구</h4>
+      <p>동종 제품군에서 자사를 강조하기 위해 둘 이상의 경쟁 제품명을 자사 광고에 등장시켜 비교. 우리나라는 객관적·입증 가능한 사실에 한하여 가능. 비교 형식이 더 정보적이라 구매 결정을 용이하게 하고, 후발 기업이 이미지 열세를 만회하는 데 유력. 단, 경쟁 브랜드를 노출시켜 인지도를 높여주는 부작용 위험. <span class="eg">예) 버거킹 vs 맥도날드, 펩시 vs 코카콜라, Dell 태블릿</span></p>
+      <h4>9) 아트 주입 (Art Infusion)</h4>
+      <p>아트가 광고·패키지의 주이미지로 사용됨으로써 아트 고유의 이미지가 광고·패키지에 전이되는 것(Hagtveddt & Patrick, 2008). <span class="eg">예) 렉서스</span></p>
+      <h4>10) 죄책감 소구</h4>
+      <p>죄책감 = 자신의 행동/비행동으로 타인에게 해를 끼쳤다고 믿을 때 느끼는 부정적 감성. 사회적·도덕적 기준에 맞게 행동하려는 동기를 유발해 권고 행동을 따르도록 설득(장기기증·기부 캠페인). 그러나 성가심·수치심 등을 활성화하면 저항을 유발할 수 있어, 수혜자의 어려움이 그들의 잘못이 아님을 인식시키는 것이 필요. 최근에는 수혜자의 자립을 돕는 방향으로 변화(월드비전 '굿바이 월드비전', 유니세프 '오뚝이 캠페인').</p>
+      <h4>11) 여러 소구의 결합</h4>
+      <p>여러 소구는 하나의 메시지에 복합적으로 사용 가능(단, 인지적 처리 과정이 방해받을 수도 있음). <span class="eg">예) 티저광고 — 불완전한 정보를 제공해 소비자의 궁금증을 유발 / 생활의 단면·증언식 기법</span></p>
+    </div>
+  </div>
+
+  <div class="fv-ch">
+    <div class="fv-chhead" style="background:var(--ch7)">7장 · 매체</div>
+
+    <div class="fv-sec">
+      <h3>1. 매체의 의미</h3>
+      <div class="def"><b>매체</b>: 메시지가 수용자에게 전달되기 위해 두 독립된 존재인 커뮤니케이터와 수용자 사이의 시공간적 간격을 넘어서는 수단</div>
+      <p><b>매체의 구성요소</b> — 아래 셋을 합한 것이 광의의 매체</p>
+      <ul>
+        <li>① <b>메시지를 담는 용기(vehicle)</b> — 신문·방송·잡지·영화</li>
+        <li>② <b>용기를 운반하는 운반체(vehicle-carrier)</b> — 음파·전파·광파 등 물리적 신호</li>
+        <li>③ <b>메시지가 흐르는 통로(channel)·유통망(network)</b> — 채널·네트워크·회로</li>
+      </ul>
+      <p>일반적으로 '매체'라 함은 메시지 용기로서의 매체, 즉 신문·방송·잡지 등을 가리킨다.</p>
+    </div>
+
+    <div class="fv-sec">
+      <h3>2. 매체의 유형</h3>
+      <h4>1) 인쇄매체</h4>
+      <ul>
+        <li><b>신문</b>: 공시성·정기성·현실성·기록성·보존성. 단점 — 선별 능력이 약하고 수명이 짧으며 비용이 많이 듦</li>
+        <li><b>잡지</b>: 기록성·보존성·가독률·재생성/표현력·선별성</li>
+        <li><b>책</b>: 기록성·전문성, 시간의 제약을 받지 않음</li>
+      </ul>
+      <p>인쇄매체 전반: 시간적 제약에서 자유롭고 기록의 영속성, 전문적·깊이 있는 내용이 강점이나, 수용자 선별능력이 약하고 수명이 짧으며 비용이 많이 듦.</p>
+      <h4>2) 전파매체</h4>
+      <p>인쇄매체에 비해 현장성·속보성 면에서 우위.</p>
+      <ul>
+        <li><b>텔레비전</b> — 장점: 일시에 다수 전달, 시청각 모두 이용, 교육수준 무관 접근, 현장성·속보성, 사회적 지위 부여. 단점: 다매체 시대에 의도한 효과 보기 어려움, 규제 엄함, 기록성 떨어짐, 제작비 비쌈</li>
+        <li><b>라디오</b> — 장점: 선택성·즉시성·이동성. 단점: 수용자가 지나치게 분산, 주의 집중 약함, 일회성</li>
+        <li><b>케이블TV</b> — 특정 계층에 도달 가능하므로 선택성 면의 약점 극복</li>
+      </ul>
+      <h4>3) 뉴미디어</h4>
+      <ul>
+        <li><b>인터넷</b>: 멀티미디어적 특성, 쌍방향 실시간 커뮤니케이션, 방대한 정보량, 효과 측정 용이, 가상공간·상호작용 확대·하이퍼텍스트·개방과 참여. 단점: 익명성의 폐해, 지각된 침입성으로 수용자 불만</li>
+        <li><b>OTT(Over The Top)</b>: 방송 전파·인터넷망을 통해 드라마·영화 등 콘텐츠를 제공(넷플릭스·아마존 등). 넷플릭스는 고객 데이터로 알고리즘을 구축해 맞춤형 콘텐츠 추천·광고를 실현한 것이 성공 비결</li>
+      </ul>
+      <h4>4) 스마트 미디어</h4>
+      <div class="def">스마트폰 운영체제(OS)를 탑재하여 소비자가 인터넷을 통해 다양한 애플리케이션을 다운로드·활용할 수 있게 하는 신개념 미디어. 언제 어디서나 접근 가능해 상호작용성이 매우 높음.</div>
+      <p><b>특성</b>: 이동성(시간·장소 무관) · 양방향성(상호 정보 소통 용이) · 실시간(실시간 정보 공유)</p>
+      <p><b>스마트 광고</b> = 상호작용성 + 개인 맞춤형 광고. ① 상호작용 가능 ② 특정 고객 대상 가능 ③ 구현 위치·형태가 기존과 다름</p>
+      <table class="ftbl">
+        <tr><th>전통 광고</th><th>스마트 미디어 광고</th></tr>
+        <tr><td>Identified sponsor</td><td>Interactivity</td></tr>
+        <tr><td>Paid</td><td>Paid</td></tr>
+        <tr><td>Nonpersonal Communication</td><td>Customization</td></tr>
+      </table>
+      <p><b>스마트 미디어 광고 유형 4가지</b></p>
+      <ul>
+        <li><b>능동형 타겟 광고</b> — 이용자 성향·취향에 맞는 광고를 선별 노출(모바일 AR·LBS, SNS, 스마트TV 기반)</li>
+        <li><b>정보 전달형 광고</b> — 기존 감성광고 외에 정보와 광고를 혼합(인포머셜형, SNS)</li>
+        <li><b>콘텐츠 결합형 광고</b> — 간접광고처럼 콘텐츠와 광고를 결합해 광고임을 인지하기 어렵게</li>
+        <li><b>라이프스타일 밀착형 광고</b> — 라이프스타일·생활패턴에 맞춰 노출(시간대별·계절별·직업별 타겟)</li>
+      </ul>
+      <p><b>주요 기법</b>: (1) 애플리케이션 광고(비즈니스 확장형·차별적 서비스 제공형·마케팅 채널형) (2) 모바일 웹페이지 광고(디스플레이·검색) (3) 모바일 쿠폰 광고 (4) 문자메시지(SMS) 광고 — 푸쉬형, 고객 DB 기반 맞춤 (5) QR코드 (6) LBS(위치기반) (7) 증강현실(AR) (8) 혼합현실(MR) (9) SNS (10) 모바일 플랫폼(리워드앱)</p>
+      <div class="tip"><b>MR(혼합현실)</b>: AR과 VR의 기술 요소를 섞고 상호작용성을 강화. AR의 낮은 몰입도를 개선하고 VR의 이질감을 완화해 소비자가 실제 환경의 일부처럼 느끼게 함(MS 홀로렌즈, 삼성 오디세이 등).</div>
+    </div>
+
+    <div class="fv-sec">
+      <h3>3. 매체 흐름 관련 모형</h3>
+      <h4>미디어 결정론(기술결정론)</h4>
+      <p>커뮤니케이션 테크놀로지인 미디어가 사회 변화를 이끄는 견인차라는 이론. 기술이 아닌 문화(인본적 지성)가 사회 변화를 주도한다는 <b>문화결정론</b>과 대척점. 헤롤드 이니스와 마샬 맥루한이 1940~1970년대에 발전시킴. <b>단점</b>: 이론적 독창성·거시적 설명력에도 불구하고 방법론적 엄밀성이 약함.</p>
+
+      <h4>마샬 맥루한 (1911~1980)</h4>
+      <p>이니스의 영향으로 미디어 테크놀로지의 효과에 주목. 커뮤니케이션 양식의 변화가 역사의 변화를 가져온다고 봄. 주요 저서: 『구텐베르크 은하계』(1962), 『미디어의 이해』(1964), 『미디어는 메시지다』(1967).</p>
+      <p><b>'미디어는 메시지다'</b> — 동일한 내용이라도 어떤 미디어로 전달되느냐에 따라 수용 양상이 완전히 달라지므로 내용보다 미디어의 특성이 중요하다. ① 모든 미디어는 우리 감각·신체의 연장 ② 미디어는 사람들이 세상을 생각하는 방식을 변화시킴. 미디어 = 인간 감각의 확장이며 우리의 사회적 존재를 조직·설명하는 필터로 기능. 미디어가 문화를 통제한다고 주장(미디어 결정론자). '지구촌(global village)'이라는 표현을 처음 사용.</p>
+      <table class="ftbl">
+        <tr><th>구분</th><th>핫미디어</th><th>쿨미디어</th></tr>
+        <tr><td>충실도·정세도</td><td>높음</td><td>낮음</td></tr>
+        <tr><td>정보량</td><td>많음(잘 정의됨)</td><td>제한적(불분명)</td></tr>
+        <tr><td>참여도</td><td>낮음</td><td>높음</td></tr>
+        <tr><td>해독 과정</td><td>불필요</td><td>많은 해독 필요</td></tr>
+        <tr><td>예</td><td>서적·사진·영화·디지털오디오</td><td>TV·만화·전화·전보·PC인터넷</td></tr>
+      </table>
+      <p><b>지구촌과 쿨미디어</b>: 맥루한은 인류가 핫미디어보다 쿨미디어를 많이 사용하며 살 것으로 예측. 오늘날 TV·인터넷·휴대전화 같은 쿨미디어가 주도. 비판: 실증적 검증이 어렵다는 지적이 지배적이나, 1960년대 맥락에서 전자 매체의 영향력을 예지한 점은 높이 평가.</p>
+
+      <h4>헤롤드 이니스 (1894~1952)</h4>
+      <p>커뮤니케이션 미디어와 사회구조의 관계를 체계적으로 설명한 최초 학자, '토론토 학파' 창시. 저서: 『제국과 커뮤니케이션』(1950), 『커뮤니케이션의 편중』(1951).</p>
+      <ul>
+        <li><b>시간구속적 미디어(time-binding)</b>: 원고·구두 커뮤니케이션, 제한된 분배력, 상대적으로 긴밀한 사회·형이상학적 사유·전통적 권위 선호</li>
+        <li><b>공간구속적 미디어(space-binding)</b>: 인쇄·전자 매체, 확장과 지배력, 상업주의·제국(empire)·테크노크라시 성립</li>
+      </ul>
+      <p><b>커뮤니케이션의 편중</b>: 커뮤니케이션 기술은 특정 형태의 권력집중을 가져오며, 모든 커뮤니케이션 형태는 본질적으로 편중을 가져옴. 이로 인해 주변부의 사람·자원이 핵심부의 이해관계에 기여하도록 착취당할 수 있음(마르크스의 물신숭배 개념과 유사).</p>
+      <p><b>인류 역사 3단계</b>: ① 원시부족시대(문자 이전) ② 구텐베르크 시대(문자시대 — 인쇄매체·선형적 사고·개인주의) ③ 전자시대·신부족시대·지구촌(빠른 커뮤니케이션·모자이크적 커뮤니케이션)</p>
+
+      <h4>닐 포스트만 — 테크노폴리</h4>
+      <p>각 미디어가 그 안에 내재된 이데올로기를 전달하며 이용자에게 강요한다고 주장. <b>도구를 사용하는 문화</b>(사람들의 가치·신념 체계를 침범하지 않고 삶과 통합) → <b>테크노폴리(technopoly)</b>(기술에 사유 세계가 지배받는 문화, 도구가 문화의 근간을 공격하고 문화가 기술에서 권위·만족·질서를 찾음)로 이행했다고 설명.</p>
+    </div>
+  </div>
+
+  <div class="fv-ch">
+    <div class="fv-chhead" style="background:var(--ch8)">8장 · 수용자 (~전경과 배경의 법칙)</div>
+
+    <div class="fv-sec">
+      <h3>1. 수용자의 의미 및 개념의 변천</h3>
+      <div class="def"><b>수용자</b>: 커뮤니케이터가 보내는 메시지와 그 밖의 여러 자극을 받게 되는 개인이나 집단, 곧 설득의 대상자</div>
+      <h4>대중 / 공중 / 군중</h4>
+      <ul>
+        <li><b>대중(mass)</b>: 공간적으로 흩어져 있고 인구통계·심리적으로 이질적이며 구성원 간 상호작용이 없는 익명성의 원자화된 집단</li>
+        <li><b>공중(public)</b>: 특정 문제에 관심을 공유하고 찬·반 의견을 가진 집단</li>
+        <li><b>군중(crowd)</b>: 특정 목적으로 같은 장소에 모인 집단</li>
+      </ul>
+      <h4>커뮤니케이션 연구에서의 수용자</h4>
+      <p><b>수동적 수용자</b> — 탄환이론·피하주사 이론: 미디어가 수동적·원자화된 수용자에게 직접적으로 강력한 효과를 발생시킨다는 관점. 수동적으로 본 이유: ① 대중사회이론의 영향(이질성·익명성·상호고립성·비조직성·비참여성) ② 행동주의 심리학(S→R) ③ 당시 사회 상황(1차 대전·나치 독일·볼셰비키 혁명).</p>
+      <p>1940년대 실증연구에서 수용자의 개인차·선별성이 제기되어 능동적 존재로 보게 됨. <b>이용과 충족이론</b>의 등장과 함께 능동적 수용자 연구가 본격화 — 수용자가 특정 욕구를 충족시키기 위해 미디어 산물을 능동적으로 소비한다는 관점.</p>
+      <h4>수용자의 속성</h4>
+      <ul>
+        <li><b>집합체로서의 수용자</b> — 특정 미디어 사용자 수(관객·시청자 수). 단 복잡한 속성이 간과되고 수치 자체에 집중해 질적 문제에 소홀(예: 시청률)</li>
+        <li><b>대중으로서의 수용자</b> — 산업화 배경의 대중사회 속 집합체. 이질적·익명적·상호관계 적음·비조직적. 단 취향에 따라 프로그램을 선택한다는 반박</li>
+        <li><b>공중으로서의 수용자</b> — 특정 이익·의견을 수렴해 해결을 꾀하는 의식을 지닌 집합체. 자아의식·상호작용 가능성·자율적 통제력(1940년대 라자스펠드 연구)</li>
+        <li><b>시장으로서의 수용자</b> — 미디어를 산업으로 보고 수용자를 잠재 소비자로 인식. <b>이중경제(dual economy)</b>: 직접 판매(구독료·관람료) + 수용자를 판매(광고 소비)</li>
+        <li><b>취향공중으로서의 수용자</b> — 지역성·사회적 배경보다 각자의 관심·취향에 따라 미디어 선택. 취향문화·취향공중(독자적 심미기준), 유형(상급/중상급/중하급/하급/준민속하급 문화). 팬·팬덤 = 더 적극적·능동적으로 참여·추종하는 유형</li>
+        <li><b>미디어 해석자로서의 수용자</b> — 미디어 텍스트의 의미를 능동적으로 해독(reading)·해석(decoding)하는 주체. 기호학적 접근(텍스트와 상호작용해 의미를 생산하는 의미작용 과정), 문화론적 연구(텍스트-독자 관계로 파악)</li>
+        <li><b>저항 운동자로서의 수용자</b> — 정치·경제·사회·문화적 모순에 대한 집단적·저항적 행동 참여(1989 시청료 거부운동, 1990년대 TV 끄기 운동, 안티조선 등)</li>
+      </ul>
+      <h4>뉴미디어 시대의 수용자</h4>
+      <ul>
+        <li><b>수용자 세분화(fragmentation)</b>: 새 미디어가 제공하는 채널 수·영향력에 비례. 미디어를 많이 받아들이고 채널 선택폭이 넓을수록 뚜렷</li>
+        <li><b>수용자 극화(polarization)</b>: 특정 미디어 내용만 접하고 다른 내용은 피하는 경향. 다채널 환경에서 자기 취향 프로그램만 골라 봄(능동적 수용자관)</li>
+      </ul>
+    </div>
+
+    <div class="fv-sec">
+      <h3>2. 능동적 수용자</h3>
+      <h4>능동적 수용자의 대두</h4>
+      <ul>
+        <li>개인차(individual difference)의 영향력</li>
+        <li>선별적 노출(selective exposure)의 발견</li>
+        <li>신행동주의 심리학(S→O→R)의 대두</li>
+      </ul>
+      <h4>바우어(Bauer)의 '완고한 수용자'</h4>
+      <p>바우어는 '완고한 수용자' 연구에서 '능동적 수용자' 개념을 정립. 능동적 수용자 = 고전적 자유 민주주의의 핵심을 이루는 이성적·주체적·자유롭고 풍요로운 삶을 영위하는 이상적·자립적 시민.</p>
+      <p><b>바우어가 제시한 수용자의 본질적 속성</b></p>
+      <ul>
+        <li>적극적으로 상호작용하는 <b>중재자(mediator)</b> — 커뮤니케이터와 상호작용하며 메시지를 변형</li>
+        <li><b>자아방어자(ego-defender)</b>의 속성(아부자의 속성도 지님)</li>
+        <li>단순 수신자가 아닌 선별적으로 수용하는 <b>정보처리자</b></li>
+        <li>적극적 <b>정보추구자·문제해결자</b> — 'What people do with the mass media?' 관점</li>
+        <li>집단·조직의 성원으로 메시지를 받고 반응(1·2차 집단이 영향)</li>
+      </ul>
+      <p><b>Biocca의 능동성 관련 개념</b>: 선택성(selectivity) / 공리성(utilitarianism) / 의도성(intentionality) / 설득에 대한 저항성(resistance to influence) / 관여성(involvement)</p>
+      <h4>수동적 → 능동적 수용자로의 변화</h4>
+      <ul>
+        <li><b>사회적 차원</b>: 사회적 차원의 변화, 삶의 질 향상, 높은 교육수준, 개성 존중 사회</li>
+        <li><b>기술적 차원</b>: 매체량 증가, 1인 미디어 시대, 정보량 증가 → 선택의 폭 확대</li>
+      </ul>
+      <p><b>디지털 수용자</b>: 디지털 방송의 특성(다채널·고품질·다기능·쌍방향성) 중 다채널화와 쌍방향성이 핵심. 선택폭이 늘어 적극적·선택적 수용태도와 정보 활동을 요구받음.</p>
+      <h4>최근 수용자 동향</h4>
+      <ul>
+        <li><b>소셜슈머(social+consumer)</b>: 개인 만족뿐 아니라 사회 전체 혜택을 위해 의견을 개진·관철하는 사회 활동가형 소비자</li>
+        <li><b>큐레이슈머(curator+consumer)</b>: 큐레이터처럼 스스로 삶을 꾸미고 연출하는 편집형 소비자</li>
+        <li><b>스마트슈머(smart+consumer)</b>: 실용 소비를 하면서 재미·건강·문화생활 등 부수 효과까지 누리는 신 소비계층</li>
+        <li>그 외: 모디슈머(재창조), 크리슈머(개발 참여), 스토리슈머(이야기 알림), 블루슈머(새 시장 선호)</li>
+      </ul>
+    </div>
+
+    <div class="fv-sec">
+      <h3>3. 수용자의 메시지 처리-수용 과정</h3>
+      <h4>효과위계 모형</h4>
+      <p>인지(Awareness) → 지식(Knowledge) → 호감(Liking) → 선호(Preference) → 확신(Conviction) → 구매(Purchase)</p>
+      <table class="ftbl">
+        <tr><th>인지적 태도(Cognition)</th><th>정서적 태도(Affective)</th><th>행동적 태도(Conative)</th></tr>
+        <tr><td>인지 · 지식</td><td>호감 · 선호</td><td>확신 · 구매</td></tr>
+      </table>
+      <ul>
+        <li><b>AIDMA</b>: 주의(Attention) → 흥미(Interest) → 욕망(Desire) → 기억(Memory) → 행동(Action)</li>
+        <li><b>AISAS(덴츠)</b>: 인지 → 흥미 → 검색(Search) → 행동 → 공유(Share). 검색·공유 단계가 추가된 순환구조</li>
+        <li><b>SIPS(덴츠)</b>: 공감(Sympathy) → 자기확인(Identity) → 참여(Participation) → 공유·확산(Share & Spread). 열린 순환구조, 소비자를 정보·콘텐츠를 생산·유통하는 참여자로 상정</li>
+      </ul>
+      <h4>수용자 정보처리 과정상 나타나는 개념</h4>
+      <ul>
+        <li><b>자극에 대한 주의</b>: 외부 자극들을 분류·선별하는 감각적 작용</li>
+        <li><b>자극에 대한 지각</b>: 외적 자극을 받아들여 의미 있게 조직하여 의미를 찾는 과정</li>
+        <li><b>자극에 대한 이해</b>: 메시지·정보의 의미를 파악하는 지적 작용</li>
+        <li><b>자극에 대한 학습</b>: 신념·태도가 처음 형성되거나 변화되어 행동에 영향</li>
+        <li><b>자극에 의한 태도변용</b>: 기존 태도의 변화뿐 아니라 강화되거나 아주 새로운 태도가 형성</li>
+        <li><b>태도의 파지(retain)</b>: 변용된 태도를 파지하고 있다가 행동 기회가 주어지면 행동으로 옮김</li>
+        <li><b>자극에 대한 행동적 반응</b>: 외적 행동 — 설득 자극에 대한 수용자의 마지막 반응단계</li>
+      </ul>
+      <h4>지각적 조직화</h4>
+      <div class="def"><b>지각적 조직화</b>: 수용자가 정보처리 대상의 여러 요소들을 통합하는 메커니즘. 기본 원리는 <b>통합</b>이며, 통합의 원리를 연구하는 분야가 <b>게슈탈트 심리학</b></div>
+      <p><b>게슈탈트 심리학</b>: 인간은 본 것을 조직화하려는 기본 성향을 지님 / "전체는 부분의 합보다 더 크다" / 사람들은 좋은 형상(good gestalt)을 갖기 위해 노력 / 20세기 초 독일에서 시작 / 지각적 조직화 원리로 단순화·완결·집단화·형상과 배경 등을 소개.</p>
+      <h4>지각적 해석</h4>
+      <p>자극을 조직화하면 그 자극을 해석한다. <b>지각적 범주화</b>(자극을 기억 속 스키마와 관련지어 자신의 방식으로 이해)와 <b>지각적 추론</b>(직접 평가가 아니라 다른 것들로부터 추리)의 원리가 적용. 조직화 다음에 해석이 발생하나, 둘은 거의 동시에 순간적으로 발생한다.</p>
+      <h4>게슈탈트의 법칙 (Gestalt laws)</h4>
+      <p><b>① 집단화의 법칙(Law of Grouping)</b></p>
+      <ul>
+        <li><b>근접성(Proximity)</b>: 가까이 있는 물체끼리 그룹지어 인식</li>
+        <li><b>유사성(Similarity)</b>: 유사한 형태·색·크기·밝기·질감·모양을 함께 묶어 지각</li>
+        <li><b>연속성(Continuity)</b>: 부드러운 연속을 따라 있는 경우를 먼저 지각</li>
+        <li><b>공동운명(Common Fate)</b>: 움직이는 요소들을 방향이 같은 것끼리 하나의 범주로 묶어 지각</li>
+        <li><b>완결/폐쇄성(Closure)</b>: 자극이 불완전할 때 메워서 가급적 완전한 전체로 지각(학습된 지식을 토대로 완성)</li>
+      </ul>
+      <span class="eg">예) Land Rover 광고(문장의 빈칸을 채워 읽게 함), 할리 브라질 'Get both sides' 캠페인, 니베아 헤어케어(연속성)</span>
+      <p><b>② 단순화의 법칙(Law of Simplification) — 프레그난쯔(Pragnanz)</b></p>
+      <p>복잡한 형태를 최대한 단순하게 받아들임. <span class="eg">예) 오륜기를 다섯 개의 원으로, 우체국 로고를 제비로 지각</span></p>
+      <p><b>③ 전경-배경의 법칙(Law of Figure–Ground)</b></p>
+      <p>게슈탈트에서 가장 유명한 법칙. 형태를 정확히 파악하기 위해 선택적으로 통찰하는 경향 — 선택해서 보고 싶은 이미지는 <b>전경</b>, 그렇지 않은 부분은 <b>배경</b>이 된다. <span class="eg">예) '루빈의 컵'(컵 또는 키스하는 연인의 옆모습), 할리데이비슨 광고(부품 ↔ 사람 형상), M.C. 에셔</span></p>
+    </div>
+  </div>
+
+  </div>
+  <!-- FULL VIEW END -->
+
+  <footer>강의 PDF(5·6·7·8장) 내용 기반 · 8장은 '전경과 배경의 법칙'까지 수록<br>탭하면 카드가 뒤집힙니다 · O/X로 약한 개념을 추려 복습하세요</footer>
+</div>
+
+<script>
+const CARDS = [
+/* ===== 5장 정보원 ===== */
+{ch:"5장",cat:"5장·정보원 기초",q:"설득 커뮤니케이터(정보원)의 정의",a:"다른 개인 또는 집단과 정보를 공유하기 원하는 개인 또는 조직",memo:"메시지 수용 여부는 정보원의 신뢰도에 달림(괴벨스). 같은 메시지라도 누가·어떤 상황에서 전달하느냐에 따라 효과가 달라짐."},
+{ch:"5장",cat:"5장·정보원 기초",q:"원천 유형에 따른 정보원 구분 4가지",a:"①기업정보 원천(광고·판매원·포장)\n②개인적 원천(가족·친지)\n③경험적 원천(직접 사용·시험)\n④중립적 원천(소비자보호원·방송 뉴스)"},
+{ch:"5장",cat:"5장·정보원 기초",q:"무명 모델이 유명 모델보다 효과적인 경우 3가지",a:"①유명 모델의 중복 출연\n②제품과 모델의 낮은 연관성\n③모델이 부정적 사건에 연루",memo:"기본은 유명 모델이 더 효과적이라는 전제."},
+{ch:"5장",cat:"5장·정보원 유형",q:"일반인 광고모델의 정의와 효과 원리",a:"제품 사용 경험 외 전문지식이 없을 것으로 기대되는 일반인.\n수신자가 자신과 같은 지위로 지각 → 유사성·일체감 → 광고 인식·효과를 높임"},
+{ch:"5장",cat:"5장·정보원 유형",q:"일반인 광고모델의 장점",a:"①소비자 증언이 신뢰감 유도·증대\n②같은 연령층이면 표적소비자와 동료의식 유발\n③경쟁제품보다 우수하나 차이를 인식 못할 때 효과적\n④위험도 낮은 일상용품에 효과적"},
+{ch:"5장",cat:"5장·정보원 유형",q:"일반인 광고모델의 단점",a:"①자연스러운 증언 연출이 어려움(제작상 어려움)\n②기대만큼 만족 못하면 오히려 광고에 대한 불신감이 커짐"},
+{ch:"5장",cat:"5장·정보원 유형",q:"유명인 광고모델의 정의와 효과 이론",a:"연예인·스포츠스타 등 인지도 높은 인물.\n효과: 유명인 신뢰도 → 제품 전이 → 호의적 태도",memo:"3가지 관점: ①정보원 신뢰도 ②조화가설(Match-up): 제품 특성과 모델 특성을 조화 ③의미전이모델(McCracken): 유명인의 문화적 의미 → 제품 → 소비자로 전이"},
+{ch:"5장",cat:"5장·정보원 유형",q:"유명인 광고모델의 장점",a:"①브랜드 인지도·이미지 제고·유지·회복\n②감성소구 제품에 강력\n③부정적 태도 완화·중화\n④시각적 통일체 역할\n⑤일관된 이미지 부여"},
+{ch:"5장",cat:"5장·정보원 유형",q:"유명인 광고모델의 단점",a:"①엄청난 비용\n②중복 출현 → 소비자 혼동\n③나이·성별·직업 속성별 반응 민감도 차이\n④모델만 기억·메시지/상품명은 잊음\n⑤사회적 물의·사고 시 신뢰성 저하\n⑥시간 경과 시 설득효과 소멸 가능"},
+{ch:"5장",cat:"5장·정보원 유형",q:"전문가 광고모델의 정의와 효과",a:"옹호하는 제품군에 전문적·우수한 지식을 가진 개인/집단.\n소비자의 위험요소(작동법 무지·부작용·신체 우려)를 줄여줌. 관여도 높은 상품에 적당",memo:"장점: 신용력 부여, 신뢰성 확보 시 광고 신뢰성 유지. 단점: 신뢰성 높이는 메시지 구성·연출이 어려움."},
+{ch:"5장",cat:"5장·정보원 속성",q:"공신력(credibility)의 정의와 4가지 속성",a:"수용자가 지각한 정보원의 전문성 + 신뢰성.\n속성: ①수용자 입장에서 판단 ②다차원적 구성체 ③상황·맥락적 ④역동성을 지님",memo:"공신력 = 전문성(Expertness) + 신뢰성(Trustworthiness)"},
+{ch:"5장",cat:"5장·정보원 속성",q:"전문성 vs 신뢰성",a:"전문성: 올바른 해답·정확한 판단을 제시할 수 있다고 지각하는 정도\n신뢰성: 편견 없이 순수한 동기로 솔직히 제시한다고 지각(동기의 순수성·객관성)",memo:"보고편향(reporting bias) = 개인적·상황적 요인으로 진실한 정보를 전달하지 않을 것이라 믿는 신념."},
+{ch:"5장",cat:"5장·정보원 속성",q:"수면자 효과(sleeper effect)",a:"Hovland & Weiss 실험. 처음엔 높은 공신력 > 낮은 공신력.\n시간 경과 후 정보원-메시지가 분리 → 높은 공신력 효과 ↓, 낮은 공신력 효과 ↑\n(정보원은 잊고 내용만 기억하기 때문)"},
+{ch:"5장",cat:"5장·정보원 속성",q:"매력성 — 신체적 vs 심리적",a:"신체적 매력: 정보원을 좋게 평가하게 만들거나 그 평가를 용인(잘 모를 때 더 중요하게 작용)\n심리적 매력: 친근감·유사성·애호성 등 복합 요인"},
+{ch:"5장",cat:"5장·정보원 속성",q:"카리스마(charisma)",a:"위대한 인물·지도자의 권위적 영향력. 종교적/마력적 힘이나 비상한 능력에서 생기는 지도력.\n위엄으로 타인을 이끌거나 설복 → 의견·태도 변용에 중요"},
+{ch:"5장",cat:"5장·정보원 속성",q:"진정성(authenticity)",a:"'너 자신 그대로'라는 그리스어 어원. 진정한 자아 그 자체(Snyder), 내면과 행동의 일치(Harter).\n과장광고에 지친 소비자를 끌어당기는 힘",memo:"예: 기업은행 송해 광고 — 모델비는 김연아의 1/3 미만이나 광고효과는 2배."},
+{ch:"5장",cat:"5장·정보원 속성",q:"후광효과(Halo effect)",a:"대상·사람에 대한 일반적 견해가 그 대상의 구체적 특성 평가에 영향을 미치는 현상",memo:"예: 삼성이 다른 제품을 잘 만들었으니 자동차도 잘 만들 것이라는 연상."},
+{ch:"5장",cat:"5장·집단과 동조",q:"동조(conformity)의 정의",a:"집단이 가하는 실제 압력 또는 구성원이 스스로 느끼는 가상의 압력에 의해 개인의 행동·신념이 변화하는 현상",memo:"실제 압력이 없어도 심리적 압력만으로 발생. 집단은 보상·처벌로 규범을 따르게 함."},
+{ch:"5장",cat:"5장·집단과 동조",q:"스미스의 동조 이유 2가지",a:"①규범적 영향력 — 사회적 지지를 얻기 위한 목적\n②정보적 영향력 — 자신과 세상에 대한 지식을 넓히기 위한 목적"},
+{ch:"5장",cat:"5장·집단과 동조",q:"쉐리프와 애쉬의 실험",a:"확실한 답을 알아도 동료의 답이 다르면 대부분 동료 답을 따름.\n개인주의 성향 강한 미국에서도 발생 → 집단 영향력 큰 한국에선 더 큰 동조 예측"},
+{ch:"5장",cat:"5장·집단과 동조",q:"동조에 영향을 미치는 요소 3가지",a:"①집단 특성(응집력↑→동조↑, 일탈자↑→동조↓)\n②집단 규모\n③개인적 특성(개인 성향 강함·교육수준 높고 합리적 처리 → 동조 안 함)"},
+{ch:"5장",cat:"5장·집단과 동조",q:"사회적 감화이론 vs 사회적 영향력 모델 (집단 규모)",a:"감화이론: 처음 의견을 제시한 사람(조직 창설자)의 영향력이 가장 크고 둘째부터 감소\n영향력 모델: 첫째보다 둘째·셋째의 영향력이 큼, 단 규모가 커질수록 동조 압력은 감소",memo:"둘을 헷갈리지 말 것! 완전한 일치는 거의 불가능하므로 규모↑→압력↓(영향력 모델)."},
+{ch:"5장",cat:"5장·집단과 동조",q:"몰개인화 vs 사회적 태만현상",a:"몰개인화: 익명성으로 자기 지각이 낮아지고 타인 평가에 둔감해짐\n사회적 태만: 여럿이 함께 일할 때 동기·노력이 줄어듦(책임감·동기 감소)"},
+
+/* ===== 6장 메시지 ===== */
+{ch:"6장",cat:"6장·메시지 기초",q:"메시지의 정의와 구성요소",a:"정보원이 수용자의 태도·의견·행동을 변용시키기 위해 보내는 커뮤니케이션 자극.\n구성요소: ①메시지 내용 ②메시지 기호 ③메시지 처리"},
+{ch:"6장",cat:"6장·메시지 기초",q:"라슨의 메시지 작성 7가지 방법",a:"①다양한 단어 선택 ②적절한 어구 사용(은유·직유·두운)\n③생생함 ④간결함 ⑤병렬구조 ⑥상상의 사용 ⑦유머",memo:"간결함 관련: 인지적 구두쇠(cognitive miser) = 인지적 노력에 많은 시간·노력을 쓰고 싶어하지 않음. 단, 너무 가벼우면 역효과."},
+{ch:"6장",cat:"6장·메시지 기초",q:"메라비언의 법칙 (7 : 38 : 55)",a:"첫인상·호감을 결정하는 비중:\n언어(말의 내용) 7% + 청각(목소리) 38% + 시각(바디랭귀지) 55%\n→ 비언어적 커뮤니케이션의 중요성 강조",memo:"<Silent Messages>. 시각 55% = 표정 35% + 태도 20%."},
+{ch:"6장",cat:"6장·메시지 처리",q:"측면성: 일면적 vs 양면적 메시지",a:"일면적: 긍정적 측면만 — 사전 태도 호의적·반대 노출 가능성 없음·교육수준 낮을 때 효과적\n양면적: 긍·부정 모두 — 반대 의견/노출 가능성 있을 때, 교육수준 높을 때 효과적(덜 편파적으로 여김)",memo:"양면적 단점: 반대 주장에 익숙지 못하면 의문을 품을 수 있음."},
+{ch:"6장",cat:"6장·메시지 처리",q:"접종이론(inoculation theory)",a:"맥과이어. 예방접종처럼 약한 공격 메시지에 미리 노출시켜 저항력을 길러 기존 태도를 유지하게 함.\n다른 설득이론과 달리 '설득에 대한 저항'에 관심",memo:"문화적 공리(cultural truism) = 광범위하게 공유되며 공격받은 적 없는 신념(예: 자유·민주주의). 한국전쟁 포로 세뇌가 역사적 배경."},
+{ch:"6장",cat:"6장·메시지 처리",q:"결론 제시: 명시적 vs 암시적",a:"명시적: 결론을 직접 언급 — 교육수준·관여도 낮음·즉각 반응에 효과적(거부감 위험)\n암시적: 수용자가 스스로 결론 도출 — 교육수준·관여도 높을 때 효과적(설득효과 지속)",memo:"효과 좌우 요인: 정보원 유형, 수용자 성향, 메시지 관여도."},
+{ch:"6장",cat:"6장·메시지 처리",q:"제시 순서: 초두효과 vs 최신효과",a:"초두효과(primacy): 메시지 첫 부분에 핵심 주장\n최신효과(recency): 메시지 끝에 핵심 주장",memo:"Miller & Campbell(1959) 모의 배심원 실험. 주목도·친숙도·제시 간격 등 맥락에 따라 달라짐."},
+{ch:"6장",cat:"6장·메시지 소구",q:"이성적 소구 vs 감성적 소구",a:"이성적: 실증·논리 자료로 이성에 호소(성능·품질·기능적 편익·당위성)\n감성적: 감정·가치관에 호소 — 긍정(사랑·우정·즐거움), 부정(공포·죄책감·두려움)"},
+{ch:"6장",cat:"6장·메시지 소구",q:"스토리텔링 소구",a:"이야기를 통해 공감을 이끌어내는 표현 기법. 단순 정보전달이 아닌 흥미로운 이야깃거리로 풀어 몰입·재미를 유발하는 주관적·감성적 소구"},
+{ch:"6장",cat:"6장·메시지 소구",q:"위협소구의 3가지 핵심요소",a:"①묘사된 사건의 유해성 크기\n②사건의 발생 가능성\n③제안된 대처 방안의 효율성\n→ 적절한 수준의 위협이 효과적",memo:"공익광고는 위협소구를 쓰지만, 상품광고는 소비자 위협을 잘 쓰지 않는 경향."},
+{ch:"6장",cat:"6장·메시지 소구",q:"유머소구의 작용 기제 5가지",a:"①사람들의 관심을 끎\n②정보원의 호감도 증진\n③정보원에 대한 신뢰성 향상\n④주의를 분산\n⑤사회적 증거로서 기능"},
+{ch:"6장",cat:"6장·메시지 소구",q:"성적소구",a:"성적 자극으로 의도하는 반응을 얻는 방법(증가 추세, 주로 시각적).\n부정적 영향: 거부감→부정 반응, 제품 회상도 저해, 외모·체형 왜곡 등 사회적 결과"},
+{ch:"6장",cat:"6장·메시지 소구",q:"패러디 소구 / 온정 소구",a:"패러디: 기성 작품을 풍자·해학적으로 재구성(원작 친숙성 가정 필요)\n온정: 사랑·가족·우정의 온화한 정서 소구(한국적 정서, 동양 문화권에서 효과적)"},
+{ch:"6장",cat:"6장·메시지 소구",q:"비교소구",a:"둘 이상의 경쟁 제품명을 등장시켜 자사를 비교(한국은 객관적·입증 가능한 사실만 허용).\n정보적이라 구매 결정 용이·후발기업에 유력. 단, 경쟁 브랜드 인지도를 높여주는 부작용 위험"},
+{ch:"6장",cat:"6장·메시지 소구",q:"아트 주입 / 죄책감 소구 / 티저광고",a:"아트 주입: 아트 고유의 이미지가 광고·패키지에 전이(Hagtveddt & Patrick)\n죄책감 소구: 타인에 해를 끼쳤다는 부정 감정 유발(기부·장기기증 캠페인)\n티저광고: 불완전한 정보로 궁금증을 유발(여러 소구의 결합)"},
+
+/* ===== 7장 매체 ===== */
+{ch:"7장",cat:"7장·매체 기초",q:"매체의 의미와 구성요소(광의의 매체)",a:"커뮤니케이터-수용자 사이의 시공간 간격을 넘어서는 수단.\n광의 = ①용기(vehicle: 신문·방송·잡지) + ②운반체(음파·전파·광파) + ③통로/유통망(channel·network)",memo:"일반적으로 '매체'는 용기로서의 매체(신문·방송·잡지)를 가리킴."},
+{ch:"7장",cat:"7장·매체 유형",q:"인쇄매체 (신문·잡지·책)",a:"신문: 공시성·정기성·현실성·기록성·보존성 (단점: 선별성 약함·수명 짧음·비용 큼)\n잡지: 기록·보존·가독·재생/표현력·선별성\n책: 기록성·전문성·시간 제약 없음"},
+{ch:"7장",cat:"7장·매체 유형",q:"전파매체 (TV·라디오·케이블)",a:"인쇄매체보다 현장성·속보성 우위.\nTV: 다수 동시 전달·시청각·교육수준 무관(단점: 규제 엄함·기록성↓·제작비)\n라디오: 선택성·즉시성·이동성(단점: 분산·일회성)\n케이블TV: 특정 계층 도달(선택성 강점)"},
+{ch:"7장",cat:"7장·매체 유형",q:"뉴미디어 (인터넷·OTT)",a:"인터넷: 멀티미디어·쌍방향 실시간·방대한 정보·효과 측정 용이(단점: 익명성 폐해·지각된 침입성)\nOTT: 인터넷망으로 콘텐츠 제공(넷플릭스·아마존), 맞춤형 추천 알고리즘이 성장 비결"},
+{ch:"7장",cat:"7장·매체 유형",q:"스마트 미디어의 정의와 특성",a:"OS를 탑재해 앱을 다운로드·활용하는 신개념 미디어.\n특성: 이동성(시공간 무관) · 양방향성 · 실시간 → 상호작용성 매우 높음"},
+{ch:"7장",cat:"7장·매체 유형",q:"스마트 광고의 정의",a:"상호작용성(Interactivity) + 개인 맞춤형(Customization)\n①상호작용 가능 ②특정 고객 대상 가능 ③구현 위치·형태가 기존과 다름",memo:"전통광고 = Identified sponsor / Paid / Nonpersonal\n스마트광고 = Interactivity / Paid / Customization"},
+{ch:"7장",cat:"7장·매체 유형",q:"스마트 미디어 광고 유형 4가지",a:"①능동형 타겟 광고(성향·취향에 맞춰 선별 노출)\n②정보 전달형(정보 + 광고 혼합)\n③콘텐츠 결합형(간접광고처럼 광고임을 인지하기 어렵게)\n④라이프스타일 밀착형(생활패턴에 맞춰)"},
+{ch:"7장",cat:"7장·매체 유형",q:"스마트 미디어 광고 기법들",a:"앱 광고, 모바일 웹페이지 광고(디스플레이·검색), 모바일 쿠폰, 문자메시지(SMS·푸쉬형), QR코드, LBS(위치기반), AR(증강현실), MR(혼합현실), SNS, 모바일 플랫폼(리워드앱)",memo:"MR = 증강현실의 낮은 몰입도와 가상현실의 이질감을 보완해 상호작용 강화."},
+{ch:"7장",cat:"7장·매체 흐름 모형",q:"미디어 결정론(기술결정론)",a:"커뮤니케이션 테크놀로지(미디어)가 사회 변화를 이끄는 견인차라는 이론.\n문화결정론(문화·인본적 지성이 주도)과 대척점. 이니스·맥루한이 1940~70년대 발전",memo:"단점: 독창성·거시적 설명력에도 불구하고 방법론적 엄밀성이 약함."},
+{ch:"7장",cat:"7장·매체 흐름 모형",q:"맥루한 '미디어는 메시지다'",a:"내용보다 미디어의 특성이 중요 — 같은 내용도 어떤 미디어로 전달되느냐에 따라 수용 양상이 완전히 달라짐.\n미디어 = 인간 감각의 확장. '지구촌(global village)' 개념 최초 사용",memo:"미디어 결정론자. 저서: 구텐베르크 은하계 / 미디어의 이해 / 미디어는 메시지(맛사지)다."},
+{ch:"7장",cat:"7장·매체 흐름 모형",q:"핫미디어 vs 쿨미디어",a:"핫미디어: 높은 충실도·정세도, 정보량 많음, 참여도 낮음, 해독 불필요 (서적·사진·영화)\n쿨미디어: 낮은 충실도·정세도, 정보 제한, 참여도 높음, 해독 필요 (TV·만화·전화)",memo:"정세도↑=핫 / 참여도↑=쿨. 핫: 서적·사진·영화·디지털오디오 / 쿨: TV·만화·전화·전보·PC인터넷."},
+{ch:"7장",cat:"7장·매체 흐름 모형",q:"이니스의 미디어관",a:"커뮤니케이션 미디어-사회구조 관계를 체계적으로 설명한 최초 학자, '토론토 학파' 창시.\n시간구속적 미디어(원고·구두, 제한된 분배력, 전통적 권위) vs 공간구속적 미디어(인쇄·전자, 확장·지배력, 상업주의·제국)",memo:"'커뮤니케이션의 편중' — 편중이 권력 집중을 가져옴(마르크스의 물신숭배 개념과 유사)."},
+{ch:"7장",cat:"7장·매체 흐름 모형",q:"포스트만의 테크노폴리(technopoly)",a:"각 미디어가 내재된 이데올로기를 이용자에게 강요.\n도구를 '사용'하는 문화(가치·신념을 침범 안 함) → 도구에 '이용'되는 전체주의 문화(테크노폴리: 도구가 문화의 근간을 공격)로 이행"},
+
+/* ===== 8장 수용자 ===== */
+{ch:"8장",cat:"8장·수용자 개념",q:"수용자의 정의",a:"커뮤니케이터가 보내는 메시지와 여러 자극을 받게 되는 개인이나 집단, 곧 설득의 대상자"},
+{ch:"8장",cat:"8장·수용자 개념",q:"대중 / 공중 / 군중",a:"대중(mass): 흩어져 있고 이질적·익명·상호작용 없는 원자화된 집단\n공중(public): 특정 문제에 관심을 공유하고 찬·반 의견을 가진 집단\n군중(crowd): 특정 목적으로 같은 장소에 모인 집단"},
+{ch:"8장",cat:"8장·수용자 개념",q:"수동적 수용자 관점 (탄환이론·피하주사이론)",a:"미디어가 수동적·원자화된 수용자에게 직접적으로 강력한 효과를 발생시킨다는 관점.\n수동적으로 본 이유: ①대중사회이론 ②행동주의 심리학(S→R) ③당시 사회 상황(1차대전·나치·볼셰비키)"},
+{ch:"8장",cat:"8장·수용자 개념",q:"능동적 수용자로의 전환 (이용과 충족이론)",a:"1940년대 실증연구에서 수용자의 개인차·선별성이 제기됨.\n이용과 충족이론: 수용자가 특정 욕구를 충족시키기 위해 미디어 산물을 능동적으로 소비한다는 관점"},
+{ch:"8장",cat:"8장·수용자 개념",q:"수용자의 속성 — 7가지 분류",a:"①집합체로서(관객·시청률) ②대중으로서(이질·익명·비조직) ③공중으로서(자아의식·상호작용, Lazarsfeld) ④시장으로서(잠재 소비자) ⑤취향공중으로서 ⑥미디어해석자로서 ⑦저항운동자로서"},
+{ch:"8장",cat:"8장·수용자 개념",q:"시장으로서의 수용자 — 이중경제",a:"미디어를 산업으로, 수용자를 미디어 상품의 잠재 소비자로 인식.\n이중경제(dual economy): 직접 판매(구독료·관람료) + 수용자를 판매(광고 소비)"},
+{ch:"8장",cat:"8장·수용자 개념",q:"취향공중 / 미디어해석자 / 저항운동자",a:"취향공중: 관심·취향에 따라 미디어 선택(취향문화·취향공중, 팬·팬덤)\n미디어해석자: 텍스트 의미를 능동적으로 해독/해석(기호학·문화론적 접근)\n저항운동자: 집단적·저항적 행동 참여(시청료 거부·TV끄기·안티조선)"},
+{ch:"8장",cat:"8장·수용자 개념",q:"뉴미디어시대 수용자: 세분화 vs 극화",a:"세분화(fragmentation): 새 미디어의 채널 수·영향력에 비례해 수용자가 나뉨\n극화(polarization): 특정 미디어 내용만 접하고 다른 내용은 피함(다채널서 취향 프로만 선택)"},
+{ch:"8장",cat:"8장·능동적 수용자",q:"능동적 수용자 대두 배경",a:"①개인차(individual difference)의 영향력\n②선별적 노출(selective exposure)의 발견\n③신행동주의 심리학(S→O→R)의 대두"},
+{ch:"8장",cat:"8장·능동적 수용자",q:"바우어의 '완고한 수용자'와 본질적 속성",a:"능동적 수용자 = 이성적·주체적·자유롭고 자립적인 이상적 시민.\n속성: 중재자(메시지 변형)·자아방어자·정보처리자(선별 수용)·정보추구자·문제해결자·집단성원",memo:"'What people do with the mass media?' 관점에서 연구 필요성 대두."},
+{ch:"8장",cat:"8장·능동적 수용자",q:"Biocca의 능동성 관련 5개념",a:"①선택성(selectivity)\n②공리성(utilitarianism)\n③의도성(intentionality)\n④설득에 대한 저항성(resistance to influence)\n⑤관여성(involvement)"},
+{ch:"8장",cat:"8장·능동적 수용자",q:"최근 수용자 동향 (○○슈머)",a:"소셜슈머(사회 전체 혜택 위해 의견 개진)·큐레이슈머(편집형 소비)·스마트슈머(똑똑+부수효과)\n모디슈머(재창조)·크리슈머(개발 참여)·스토리슈머(이야기 알림)·블루슈머(새 시장 선호)"},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"효과위계 모형 (인지→정서→행동)",a:"인지(Awareness) → 지식(Knowledge) → 호감(Liking) → 선호(Preference) → 확신(Conviction) → 구매(Purchase)",memo:"인지적 태도(Cognition) → 정서적 태도(Affective) → 행동적 태도(Conative) 순서."},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"AIDMA / AISAS / SIPS",a:"AIDMA: 주의→흥미→욕망→기억→행동\nAISAS(덴츠): 인지→흥미→검색(Search)→행동→공유(Share), 순환구조\nSIPS(덴츠): 공감(Sympathy)→자기확인(Identity)→참여(Participation)→공유·확산(Share&Spread)"},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"수용자 정보처리 과정 — 단계별 개념",a:"주의(선별) → 지각(의미 있게 조직) → 이해(의미 파악) → 학습(신념·태도 형성/변화) → 태도변용(변화·강화·신규 형성) → 파지(retain) → 행동적 반응(마지막 단계)"},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"지각적 조직화와 게슈탈트 심리학",a:"지각적 조직화: 정보처리 대상의 여러 요소를 통합하는 메커니즘(기본 원리 = 통합).\n게슈탈트: 인간은 본 것을 조직화, '전체는 부분의 합보다 크다', 좋은 형상(good gestalt) 추구",memo:"20세기 초 독일. 조직화 원리로 단순화·완결·집단화·형상과 배경 등을 소개."},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"지각적 해석 — 범주화 vs 추론",a:"지각적 범주화: 자극을 기억 속 스키마와 관련지어 자신의 방식으로 이해\n지각적 추론: 직접 평가가 아닌 다른 것들로부터 추리\n→ 조직화 다음에 해석이지만, 거의 동시에 순간적으로 발생"},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"게슈탈트 법칙 ① 집단화의 법칙",a:"근접성(가까운 것끼리) · 유사성(형태·색·크기·밝기·질감) · 연속성(부드러운 연속) · 공동운명(같은 방향끼리 묶음) · 완결/폐쇄성(불완전한 형태를 완성)"},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"게슈탈트 법칙 ② 단순화의 법칙",a:"프레그난쯔(Pragnanz) 법칙. 복잡한 형태를 최대한 단순하게 받아들임",memo:"예: 오륜기를 다섯 개의 원으로, 우체국 로고를 제비로 지각."},
+{ch:"8장",cat:"8장·메시지 처리-수용 과정",q:"게슈탈트 법칙 ③ 전경-배경의 법칙",a:"게슈탈트에서 가장 유명한 법칙. 형태를 정확히 파악하기 위해 선택적으로 통찰.\n보고 싶어하는 이미지 = 전경, 그렇지 않은 부분 = 배경",memo:"예: 루빈의 컵(컵 또는 키스하는 연인), 할리데이비슨 광고(부품 ↔ 사람 형상)."}
+];
+
+const chColors={"5장":"var(--ch5)","6장":"var(--ch6)","7장":"var(--ch7)","8장":"var(--ch8)"};
+let deck=[], idx=0, flipped=false, score={o:0,x:0}, weakSet=new Set();
+
+function buildDeck(){
+  const v=document.getElementById('catSel').value;
+  let pool;
+  if(v==='all') pool=CARDS.slice();
+  else if(v==='ch5') pool=CARDS.filter(c=>c.ch==='5장');
+  else if(v==='ch6') pool=CARDS.filter(c=>c.ch==='6장');
+  else if(v==='ch7') pool=CARDS.filter(c=>c.ch==='7장');
+  else if(v==='ch8') pool=CARDS.filter(c=>c.ch==='8장');
+  else if(v==='weak') pool=CARDS.filter(c=>weakSet.has(c.q));
+  else pool=CARDS.filter(c=>c.cat===v);
+  if(v==='all'||v.startsWith('ch')) shuffle(pool);
+  deck=pool; idx=0; flipped=false; score={o:0,x:0};
+  if(deck.length===0){ deck=[{cat:"안내",q:"아직 틀린 카드가 없어요",a:"카드를 풀면서 ✕(다시 볼래요)를 누른 카드가 여기 모입니다.",memo:""}]; }
+  render();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
+
+function render(){
+  document.getElementById('doneMsg').style.display='none';
+  document.getElementById('cardArea').style.display='block';
+  const c=deck[idx];
+  const col=chColors[c.ch]||'var(--accent)';
+  document.getElementById('cCat').textContent=c.cat;
+  document.getElementById('cCat').style.background=col;
+  document.getElementById('cQ').textContent=c.q;
+  document.getElementById('cA').textContent=c.a;
+  document.getElementById('cMemo').textContent=c.memo||'';
+  document.getElementById('cBack').style.borderTop="";
+  flipped=false;
+  document.getElementById('cWrap').classList.remove('flipped');
+  document.getElementById('sO').textContent='O '+score.o;
+  document.getElementById('sX').textContent='X '+score.x;
+  document.getElementById('totalCount').textContent='이번 묶음 '+deck.length+'장';
+  const done=score.o+score.x;
+  document.getElementById('pFill').style.width=(deck.length?done/deck.length*100:0)+'%';
+  document.getElementById('pText').textContent=done+' / '+deck.length;
+}
+function flip(){flipped=!flipped;document.getElementById('cWrap').classList.toggle('flipped',flipped);}
+function grade(ok){
+  const c=deck[idx];
+  if(ok){score.o++; weakSet.delete(c.q);} else {score.x++; if(c.q) weakSet.add(c.q);}
+  if(idx<deck.length-1){idx++;render();} else {finish();}
+}
+function prevCard(){ if(idx>0){idx--;render();} }
+function finish(){
+  document.getElementById('cardArea').style.display='none';
+  const dm=document.getElementById('doneMsg'); dm.style.display='block';
+  document.getElementById('doneText').textContent=
+    `O ${score.o}개 · X ${score.x}개 · 정답률 ${deck.length?Math.round(score.o/deck.length*100):0}%  /  복습할 카드 ${weakSet.size}개`;
+}
+function reshuffle(){buildDeck();}
+function changeCat(){buildDeck();}
+function reviewWeak(){document.getElementById('catSel').value='weak';buildDeck();}
+
+/* ----- LIST VIEW ----- */
+function buildList(){
+  const chs=["5장","6장","7장","8장"];
+  const titles={"5장":"5장 · 설득 커뮤니케이터(정보원)","6장":"6장 · 메시지","7장":"7장 · 매체","8장":"8장 · 수용자(~전경과 배경)"};
+  let html='';
+  chs.forEach((ch,i)=>{
+    const items=CARDS.filter(c=>c.ch===ch);
+    html+=`<div class="ch-block${i===0?' open':''}">
+      <div class="ch-head" style="background:${chColors[ch]}" onclick="this.parentNode.classList.toggle('open')">
+        ${titles[ch]} <span class="count">${items.length}</span></div>
+      <div class="ch-body">`;
+    items.forEach(c=>{
+      html+=`<div class="li">
+        <div class="li-cat">${c.cat}</div>
+        <div class="li-q">${c.q}</div>
+        <div class="li-a">${c.a}</div>
+        ${c.memo?`<div class="li-memo">▸ ${c.memo}</div>`:''}
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById('listView').innerHTML=html;
+}
+function setMode(m){
+  const card=document.getElementById('cardView'), list=document.getElementById('listView'), full=document.getElementById('fullView');
+  document.getElementById('mCard').classList.toggle('on',m==='card');
+  document.getElementById('mList').classList.toggle('on',m==='list');
+  document.getElementById('mFull').classList.toggle('on',m==='full');
+  card.style.display = m==='card'?'block':'none';
+  list.style.display = m==='list'?'block':'none';
+  full.style.display = m==='full'?'block':'none';
+  window.scrollTo(0,0);
+}
+
+buildDeck();
+buildList();
+</script>
+</body>
+</html>
